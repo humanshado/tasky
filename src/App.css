@@ -1,4 +1,42 @@
 .App {
-  text-align: center;
+  background-color: #2C272F;
+  color: #C4C1C7;
 }
 
+h1,h2,h3,h4{
+  margin: 0;
+}
+
+.main {
+  display: flex;
+  background-color: #C4C1C7;
+  color: #2C272F;
+}
+
+.main-nav{
+  width: 15vw;
+  height: 100vh; 
+  background-color: #2C272F;
+  color: #C4C1C7;
+  padding: 0.8em;
+}
+
+.list {
+  width: 24.5%;
+  padding: 1.5em;
+}
+
+.list h2 {
+  text-align: center;
+  font-weight: bold;
+}
+
+.card {
+  width: 98%;
+  background-color: #F8F8F8;
+  margin-top: 1.0em;
+  border: 1px solid #DDD;
+  border-radius: 8px;
+  padding: 1.2em;
+  box-shadow: 1px 1px 3px 3px #000;
+}
