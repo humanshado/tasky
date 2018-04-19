@@ -40,3 +40,14 @@ h1,h2,h3,h4{
   padding: 1.2em;
   box-shadow: 1px 1px 3px 3px #000;
 }
+
+.taskslist ul {
+  list-style: none;
+}
+
+.addtask-form{
+  width: 95%;
+  padding: 0.4em;
+  border-radius: 3px;
+  border: none;
+}
