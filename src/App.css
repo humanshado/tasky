@@ -13,12 +13,19 @@ h1,h2,h3,h4{
   color: #2C272F;
 }
 
-.main-nav{
-  width: 15vw;
+.side-nav{
+  width: 20vw;
   height: 100vh; 
   background-color: #2C272F;
   color: #C4C1C7;
   padding: 0.8em;
+  margin: 0;
+  text-align: center;
+}
+
+.side-nav ul{
+  list-style: none;
+  padding-left: 0;
 }
 
 .list {
@@ -32,7 +39,7 @@ h1,h2,h3,h4{
 }
 
 .card {
-  width: 98%;
+  width: 87%;
   background-color: #F8F8F8;
   margin-top: 1.0em;
   border: 1px solid #DDD;
@@ -50,4 +57,14 @@ h1,h2,h3,h4{
   padding: 0.4em;
   border-radius: 3px;
   border: none;
+}
+
+#add-icon{
+  font-size: 3em;
+  z-index: 99;
+}
+
+#add-icon:hover{
+  color: green;
+  cursor: pointer;
 }

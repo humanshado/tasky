@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import base from './base';
 import Main from './components/Main';
-import { getDefaultData } from './data';
+//import AddCardForm from './components/AddCardForm';
 import './App.css';
 
 class App extends Component {
@@ -8,8 +9,20 @@ class App extends Component {
     super(props);
     
     this.state = {
-      data: getDefaultData()
+      data: []
     }
+  }
+
+  componentDidMount() {
+    this.actionsRef = base.syncState(`actions`, {
+      context: this,
+      state: 'data'
+    })
+  }
+
+  componentWillUnmount(){
+    console.log('Unmounting...');
+    base.removeBinding(this.actionsRef);
   }
   
   render() {

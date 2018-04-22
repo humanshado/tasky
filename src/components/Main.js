@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SideNav from './SideNav';
 import CardList from './CardList';
 
 class Main extends Component {
@@ -9,21 +10,19 @@ class Main extends Component {
         }
         return (
             <div className="main">
-                <div className="main-nav">
-                    <h3>Navigation here ...</h3>
-                </div>
+                <SideNav />
                 <CardList
-                    id='todo'
+                    listId="todo"
                     title="To Do"
                     cards={this.props.data.filter(card => card.status === "todo")}
                 />
                 <CardList
-                    id='ongoing'
+                    listId="on-going"
                     title="On Going"
                     cards={this.props.data.filter(card => card.status === "on-going")}
                 />
                 <CardList
-                    id='completed'
+                    listId="completed"
                     title="Completed"
                     cards={this.props.data.filter(card => card.status === "completed")}
                 />
