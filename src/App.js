@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import _ from '../node_modules/lodash';
+import _ from 'lodash';
 import base from './base';
 import Main from './components/Main';
 //import AddCardForm from './components/AddCardForm';
