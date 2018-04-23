@@ -1,25 +1,44 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import base from '../base';
+import uuidv4 from 'uuid/v4';
 import Card from './Card';
 
 class CardList extends Component {
-    render () {
+
+    addCard = async () => {
+        console.log('Adding new card to the list ...');
+        let cardId = await uuidv4();
+        base.post(`actions/${cardId}`, {
+            data: {
+                id: cardId,
+                title: '',
+                description: '',
+                status: 'todo',
+                tasks: []
+            }
+        }).then(res => {
+            console.log('New card added ...', this.props.data);
+        }).catch(error => console.log(error));
+    }
+
+    render() {
         console.log('props in cardlist ', this.props);
         let cards = this.props.cards.map((card) => {
             return <Card id={card.id}
                 title={<strong>{card.title}</strong>}
                 description={card.description}
                 tasks={card.tasks}
-                key={card.id} 
+                key={card.id}
                 listId={this.props.listId} />
         });
         return (
-            <div className="list" style={this.props.listId === 'completed' ? { backgroundColor: '#003459', borderColor: '#7390A4' } : null }>
+            <div className="list" style={this.props.listId === 'completed' ? { backgroundColor: '#003459', borderColor: '#7390A4' } : null}>
                 <div>
-                    <h2 style={this.props.listId === 'completed' ? { color: '#7390A4'} : null}>{this.props.title}</h2>
+                    <h2 style={this.props.listId === 'completed' ? { color: '#7390A4' } : null}>{this.props.title}</h2>
                     {cards}
                 </div> <br />
-                {this.props.listId === "todo" && 
-                    <span id="add-icon">
+                {this.props.listId === "todo" &&
+                    <span id="add-icon" onClick={() => this.addCard()}>
                         <i className="fas fa-plus-circle"></i>
                     </span>
                 }
