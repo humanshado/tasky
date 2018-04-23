@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from '../node_modules/lodash';
 import base from './base';
 import Main from './components/Main';
 //import AddCardForm from './components/AddCardForm';
@@ -28,7 +29,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Main data={this.state.data}/>
+        <Main data={_.values(this.state.data)}/>
       </div>
     );
   }
