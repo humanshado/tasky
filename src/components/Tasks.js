@@ -14,9 +14,10 @@ class Tasks extends Component {
             <div className="taskslist">
                 <ul>{tasks}</ul>
                 {this.props.listId !== "completed" &&
-                    <input type="text"
-                            className="addtask-form"
-                            placeholder="add a new task and press enter" />
+                    <input 
+                        type="text"
+                        className="addtask-form"
+                        placeholder="add a new task and press enter" />
                 }
             </div>
         )

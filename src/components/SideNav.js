@@ -4,7 +4,7 @@ class SideNav extends Component {
     render () {
         return (
             <div className="side-nav">
-                <h3>Navigation...</h3>
+                <h3>Profile</h3>
                 <br />
                 <img src="#" alt="user image"/>
                 <h3>User Name</h3>
