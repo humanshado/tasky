@@ -3,14 +3,7 @@ import Tasks from './Tasks';
 
 
 class Card extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            editingCard: null
-        }
-    }
-
+    
     render () {
         console.log('props in card ', this.props);
         return (

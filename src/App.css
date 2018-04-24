@@ -38,7 +38,7 @@ h1,h2,h3,h4{
   font-weight: bold;
 }
 
-.card {
+.card, .add-card-form {
   width: 87%;
   background-color: #F8F8F8;
   margin-top: 1.0em;

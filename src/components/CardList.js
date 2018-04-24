@@ -19,27 +19,39 @@ class CardList extends Component {
                 tasks: ''
             }
         }).then(res => {
-            console.log('New card added ...', this.props.data);
+            console.log('New card added ...');
+        }).catch(error => console.log(error));
+    }
+
+    updateCard = async (cardId, { title, description }) => {
+        console.log('Updating card ...');
+        base.update(`actions/${cardId}`, {
+            data: {
+                title,
+                description
+            }
+        }).then(res => {
+            console.log('Card updated ...');
         }).catch(error => console.log(error));
     }
 
     render() {
         console.log('props in cardlist ', this.props);
-        // // let cards = this.props.cards.map((card) => {
-        //     return <Card id={card.id}
-        //         title={<strong>{card.title}</strong>}
-        //         description={card.description}
-        //         tasks={card.tasks}
-        //         key={card.id}
-        //         listId={this.props.listId} />
-        // // });
+
         return (
             <div className="list" style={this.props.listId === 'completed' ? { backgroundColor: '#003459', borderColor: '#7390A4' } : null}>
                 <div>
                     <h2 style={this.props.listId === 'completed' ? { color: '#7390A4' } : null}>{this.props.title}</h2>
                     {this.props.cards.map((card) => {
-                        card.title === '' && card.description === ''
-                            ? <AddCardForm />
+                        return card.title === '' && card.description === ''
+                            ? <AddCardForm 
+                                id={card.id}
+                                title={card.title}
+                                description={card.description}
+                                tasks={card.tasks}
+                                key={card.id}
+                                listId={this.props.listId}
+                                updateCard={this.updateCard}/>
                             :<Card 
                                 id={card.id}
                                 title={<strong>{card.title}</strong>}
