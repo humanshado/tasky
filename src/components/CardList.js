@@ -6,7 +6,15 @@ import AddCardForm from './AddCardForm';
 
 
 class CardList extends Component {
-    
+    constructor (props) {
+        super(props)
+        
+        this.state = {
+            cardId: '',
+            editingCard: false
+        }
+    }
+
     addCard = async () => {
         console.log('Adding new card to the list ...');
         let cardId = await uuidv4();
@@ -18,8 +26,12 @@ class CardList extends Component {
                 status: 'todo',
                 tasks: ''
             }
-        }).then(res => {
+        }).then(() => {
             console.log('New card added ...');
+            this.setState({ 
+                cardId,
+                editingCard: false
+            })
         }).catch(error => console.log(error));
     }
 
@@ -30,9 +42,20 @@ class CardList extends Component {
                 title,
                 description
             }
-        }).then(res => {
+        }).then(() => {
             console.log('Card updated ...');
+            this.setState({ 
+                cardId,
+                editingCard: false
+            })
         }).catch(error => console.log(error));
+    }
+
+    toggleEditCard = (id, target) => {
+        this.setState({
+            cardId: id,
+            editingCard: true
+        })
     }
 
     render() {
@@ -43,9 +66,9 @@ class CardList extends Component {
                 <div>
                     <h2 style={this.props.listId === 'completed' ? { color: '#7390A4' } : null}>{this.props.title}</h2>
                     {this.props.cards.map((card) => {
-                        return card.title === '' && card.description === ''
+                        return (card.title === '' && card.description === '') || (this.state.editingCard && this.state.cardId === card.id)
                             ? <AddCardForm 
-                                id={card.id}
+                                id={this.state.cardId}
                                 title={card.title}
                                 description={card.description}
                                 tasks={card.tasks}
@@ -54,11 +77,12 @@ class CardList extends Component {
                                 updateCard={this.updateCard}/>
                             :<Card 
                                 id={card.id}
-                                title={<strong>{card.title}</strong>}
+                                title={card.title}
                                 description={card.description}
                                 tasks={card.tasks}
                                 key={card.id}
-                                listId={this.props.listId} />
+                                listId={this.props.listId}
+                                toggleEditCard={this.toggleEditCard} />
                     })}
                 </div> 
                 <br />
