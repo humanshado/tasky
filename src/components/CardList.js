@@ -13,6 +13,9 @@ class CardList extends Component {
             cardId: '',
             editingCard: false
         }
+
+        this.titleRef = React.createRef();
+        this.descRef = React.createRef();
     }
 
     addCard = async () => {
@@ -55,8 +58,14 @@ class CardList extends Component {
         this.setState({
             cardId: id,
             editingCard: true
-        })
-    }
+        }, () => { 
+            if (this.titleRef.current.name === target.id){
+                this.titleRef.current.focus(); 
+            }else{
+                this.descRef.current.focus(); 
+            }
+        }
+    )}
 
     render() {
         console.log('props in cardlist ', this.props);
@@ -74,7 +83,9 @@ class CardList extends Component {
                                 tasks={card.tasks}
                                 key={card.id}
                                 listId={this.props.listId}
-                                updateCard={this.updateCard}/>
+                                updateCard={this.updateCard}
+                                titleRef={this.titleRef}
+                                descRef={this.descRef}/>
                             :<Card 
                                 id={card.id}
                                 title={card.title}

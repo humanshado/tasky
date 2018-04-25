@@ -26,6 +26,7 @@ class AddCardForm extends Component {
     }
 
     handleInput = (e) => {
+        e.preventDefault();
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -38,10 +39,11 @@ class AddCardForm extends Component {
                 <form onBlur={this.handleSubmit}>
                     <input 
                         type="text" 
-                        name="title" 
+                        name="title"
                         className="addtask-form"
                         value={this.state.title}
                         onChange={(e) => this.handleInput(e)}
+                        ref={this.props.titleRef}
                         placeholder="title"/>
                     <hr />
                     <input 
@@ -50,6 +52,7 @@ class AddCardForm extends Component {
                         className="addtask-form"
                         value={this.state.description}
                         onChange={(e) => this.handleInput(e)}
+                        ref={this.props.descRef}
                         placeholder="description"/>
                     <Tasks
                         listId={this.props.listId}
