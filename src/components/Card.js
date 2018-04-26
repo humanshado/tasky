@@ -14,7 +14,7 @@ class Card extends Component {
     handleSubmitCardToRemove = (id) => {
         this.props.submitRemoveCard(id);
     }
-    
+
     render () {
         console.log('props in card ', this.props);
         const { id, title, description, listId, tasks } = this.props;

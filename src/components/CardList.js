@@ -73,6 +73,11 @@ class CardList extends Component {
         this.props.handleRemoveCard(cardId);
     }
 
+    addTask = () => {
+        console.log('Adding new task ...');
+    }
+
+
     render() {
         console.log('props in cardlist ', this.props);
 
