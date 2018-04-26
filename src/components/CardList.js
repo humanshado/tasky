@@ -27,7 +27,8 @@ class CardList extends Component {
                 title: '',
                 description: '',
                 status: 'todo',
-                tasks: ''
+                tasks: '',
+                timestamp: Date.now()
             }
         }).then(() => {
             console.log('New card added ...');
@@ -67,6 +68,11 @@ class CardList extends Component {
         }
     )}
 
+    submitRemoveCard = (cardId) => {
+        console.log('cardId in submitRemoveCard ', cardId);
+        this.props.handleRemoveCard(cardId);
+    }
+
     render() {
         console.log('props in cardlist ', this.props);
 
@@ -93,7 +99,8 @@ class CardList extends Component {
                                 tasks={card.tasks}
                                 key={card.id}
                                 listId={this.props.listId}
-                                toggleEditCard={this.toggleEditCard} />
+                                toggleEditCard={this.toggleEditCard} 
+                                submitRemoveCard={this.submitRemoveCard.bind(this)}/>
                     })}
                 </div> 
                 <br />

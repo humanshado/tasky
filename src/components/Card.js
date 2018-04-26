@@ -10,6 +10,10 @@ class Card extends Component {
         this.props.toggleEditCard(id, e.target);
         
     }
+
+    handleSubmitCardToRemove = (id) => {
+        this.props.submitRemoveCard(id);
+    }
     
     render () {
         console.log('props in card ', this.props);
@@ -17,6 +21,7 @@ class Card extends Component {
         return (
             <div className="card" style={listId === 'completed' ? { backgroundColor: '#B9C7D1' } : null}>
                 <h3 id="title" onClick={this.handleEdit}>{title}</h3>
+                <span id="delete-X" onClick={() => this.handleSubmitCardToRemove(id)}>X</span>
                 <hr />
                 <div className="card-details">
                     <p id="description" onClick={this.handleEdit}>{description}</p>

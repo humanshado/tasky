@@ -25,11 +25,23 @@ class App extends Component {
     console.log('Unmounting...');
     base.removeBinding(this.actionsRef);
   }
+
+  removeCard(id) {
+    console.log('cardId in removeCard ', id);
+    var newData = _.values(this.state.data);
+    newData.splice(id, 1);
+    this.setState({
+      data: newData
+    });
+  }
+
   
   render() {
     return (
       <div className="App">
-        <Main data={_.values(this.state.data)}/>
+        <Main 
+          data={_.values(this.state.data)}
+          removeCard={this.removeCard.bind(this)}/>
       </div>
     );
   }

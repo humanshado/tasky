@@ -46,7 +46,7 @@ class AddCardForm extends Component {
                         ref={this.props.titleRef}
                         placeholder="title"/>
                     <hr />
-                    <input 
+                    <textarea 
                         type="text" 
                         name="description"
                         className="addtask-form"
