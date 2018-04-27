@@ -26,7 +26,6 @@ class AddCardForm extends Component {
     }
 
     handleInput = (e) => {
-        e.preventDefault();
         this.setState({
             [e.target.name]: e.target.value
         })

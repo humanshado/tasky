@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import base from './base';
-import Main from './components/Main';
-//import AddCardForm from './components/AddCardForm';
+import SideNav from './components/SideNav';
+import CardList from './components/CardList';
 import './App.css';
 
 class App extends Component {
@@ -17,7 +17,8 @@ class App extends Component {
   componentDidMount() {
     this.actionsRef = base.syncState(`actions`, {
       context: this,
-      state: 'data'
+      state: 'data',
+      asArray: true
     })
   }
 
@@ -26,22 +27,39 @@ class App extends Component {
     base.removeBinding(this.actionsRef);
   }
 
-  removeCard(id) {
-    console.log('cardId in removeCard ', id);
-    var newData = _.values(this.state.data);
-    newData.splice(id, 1);
-    this.setState({
-      data: newData
-    });
+  removeCard = (cardId) => {
+    base.fetch('actions', {
+      context: this,
+      asArray: true
+    }).then((res) => {
+      res = res.filter((d) => d.id !== cardId );
+      this.setState({ data: res });
+    }).catch(error => console.log(error));
   }
 
-  
   render() {
+    const { data } = this.state;
+
     return (
       <div className="App">
-        <Main 
-          data={_.values(this.state.data)}
-          removeCard={this.removeCard.bind(this)}/>
+        <div className="main">
+          <SideNav />
+          <CardList
+            listId="todo"
+            title="To Do"
+            cards={data.filter(card => card.status === "todo")}
+            removeCard={this.removeCard} />
+          <CardList
+            listId="on-going"
+            title="On Going"
+            cards={data.filter(card => card.status === "on-going")}
+            removeCard={this.removeCard} />
+          <CardList
+            listId="completed"
+            title="Completed"
+            cards={data.filter(card => card.status === "completed")}
+            removeCard={this.removeCard} />
+        </div>
       </div>
     );
   }
