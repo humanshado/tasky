@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Tasks from './Tasks';
+import TasksList from './TasksList';
 
 
 class Card extends Component {
@@ -15,6 +15,13 @@ class Card extends Component {
         this.props.submitRemoveCard(id);
     }
 
+    handleSubmitTasks = (newTasks) => {
+        let { id } = this.props;
+        console.log('submitting new tasks in card ', newTasks);
+        console.log('id submitting new tasks in card ', id);
+        this.props.submitTasks(id, newTasks);
+    }
+
     render () {
         console.log('props in card ', this.props);
         const { id, title, description, listId, tasks } = this.props;
@@ -25,10 +32,12 @@ class Card extends Component {
                 <hr />
                 <div className="card-details">
                     <p id="description" onClick={this.handleEdit}>{description}</p>
-                <Tasks
+                <TasksList
                     listId={listId}
                     cardId={id}
-                    tasks={tasks || []} />
+                    tasks={tasks || []}
+                    handleSubmitTasks={this.handleSubmitTasks}
+                />
                 </div>
                     <hr />
                 <p>Card Move Options ...</p> 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import base from '../base';
 import uuidv4 from 'uuid/v4';
+import update from 'immutability-helper';
 import Card from './Card';
 import AddCardForm from './AddCardForm';
 
@@ -14,13 +15,16 @@ class CardList extends Component {
             editingCard: false
         }
 
+        this.submitRemoveCard = this.submitRemoveCard.bind(this);
+        this.submitTasks = this.submitTasks.bind(this);
+
         this.titleRef = React.createRef();
         this.descRef = React.createRef();
     }
 
     addCard = async () => {
         console.log('Adding new card to the list ...');
-        let cardId = await uuidv4();
+        const cardId = await uuidv4();
         base.post(`actions/${cardId}`, {
             data: {
                 id: cardId,
@@ -73,6 +77,19 @@ class CardList extends Component {
         this.props.removeCard(cardId);
     }
 
+    submitTasks = (cardId, newTasks) => {
+        console.log('submitting new tasks in CardList ... ');
+        console.log('cardId submitting new tasks in CardList ', cardId);
+        console.log('new tasks in CardList ', newTasks);
+
+        let currCard = this.props.cards.filter(c => c.id === cardId);
+        let newCard = update(currCard, {
+            0: { tasks: { $set: newTasks }}
+        })
+         console.log('newCard after inserting newTasks..', newCard);
+         this.props.updateTasksList(cardId, newCard);
+    }
+
     render() {
         console.log('props in cardlist ', this.props);
 
@@ -100,7 +117,9 @@ class CardList extends Component {
                                 key={card.id}
                                 listId={this.props.listId}
                                 toggleEditCard={this.toggleEditCard} 
-                                submitRemoveCard={this.submitRemoveCard.bind(this)}/>
+                                submitRemoveCard={this.submitRemoveCard}
+                                submitTasks={this.submitTasks}
+                            />
                     })}
                 </div> 
                 <br />

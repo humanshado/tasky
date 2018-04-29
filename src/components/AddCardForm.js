@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Tasks from './Tasks';
+import TasksList from './TasksList';
 
 class AddCardForm extends Component {
     constructor(props) {
@@ -53,7 +53,7 @@ class AddCardForm extends Component {
                         onChange={(e) => this.handleInput(e)}
                         ref={this.props.descRef}
                         placeholder="description"/>
-                    <Tasks
+                    <TasksList
                         listId={this.props.listId}
                         cardId={this.props.id}
                         tasks={this.props.tasks || []} />
