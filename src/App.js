@@ -53,7 +53,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="main">
           <SideNav />
           <CardList
             listId="todo"
@@ -73,7 +72,6 @@ class App extends Component {
             cards={data.filter(card => card.status === "completed")}
             removeCard={this.removeCard} 
             updateTasksList={this.updateTasksList}/>
-        </div>
       </div>
     );
   }

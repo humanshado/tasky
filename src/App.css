@@ -1,6 +1,7 @@
 .App {
-  background-color: #2C272F;
-  color: #C4C1C7;
+  display: flex;
+  background-color: #C4C1C7;
+  color: #2C272F;
 }
 
 h1,h2,h3,h4{
@@ -49,12 +50,22 @@ h1,h2,h3,h4{
   box-shadow: 1px 1px 3px 3px #000;
 }
 
+.taskslist {
+  width: 100%;
+  height: 70%;
+  padding: 2px;
+  padding-bottom: 4px;
+  border: 0.5px dashed #CCC;
+}
+
 .taskslist ul {
   list-style: none;
+  margin-left: 0;
+  padding-left: 4px;
 }
 
 .addtask-form{
-  width: 95%;
+  width: 97%;
   padding: 0.4em;
   border-radius: 3px;
   border: none;

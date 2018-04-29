@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import base from '../base';
 import uuidv4 from 'uuid/v4';
 import update from 'immutability-helper';
+import sortBy from 'sort-by';
 import Card from './Card';
 import AddCardForm from './AddCardForm';
 
@@ -92,6 +93,10 @@ class CardList extends Component {
 
     render() {
         console.log('props in cardlist ', this.props);
+
+        if(this.props.cards){
+            this.props.cards.sort(sortBy('timestamp'));
+        }
 
         return (
             <div className="list" style={this.props.listId === 'completed' ? { backgroundColor: '#003459', borderColor: '#7390A4' } : null}>

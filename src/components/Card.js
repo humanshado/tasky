@@ -4,7 +4,7 @@ import TasksList from './TasksList';
 
 class Card extends Component {
 
-    handleEdit = (e) => {
+    handleEditCard = (e) => {
         //console.log('target in handleEdit in card ', e.target);   
         let { id } = this.props;
         this.props.toggleEditCard(id, e.target);
@@ -27,11 +27,11 @@ class Card extends Component {
         const { id, title, description, listId, tasks } = this.props;
         return (
             <div className="card" style={listId === 'completed' ? { backgroundColor: '#B9C7D1' } : null}>
-                <h3 id="title" onClick={this.handleEdit}>{title}</h3>
+                <h3 id="title" onClick={this.handleEditCard}>{title}</h3>
                 <span id="delete-X" onClick={() => this.handleSubmitCardToRemove(id)}>X</span>
                 <hr />
                 <div className="card-details">
-                    <p id="description" onClick={this.handleEdit}>{description}</p>
+                    <p id="description" onClick={this.handleEditCard}>{description}</p>
                 <TasksList
                     listId={listId}
                     cardId={id}
@@ -39,7 +39,7 @@ class Card extends Component {
                     handleSubmitTasks={this.handleSubmitTasks}
                 />
                 </div>
-                    <hr />
+                <hr />
                 <p>Card Move Options ...</p> 
             </div>
         )

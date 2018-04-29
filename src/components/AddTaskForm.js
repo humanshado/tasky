@@ -29,7 +29,8 @@ class AddTaskForm extends Component {
                         className="addtask-form"
                         value={this.state.taskName}
                         onChange={(e) => this.updateTaskName(e)}
-                        placeholder="add a new task and press enter" 
+                        placeholder="add a new task and press enter"
+                        style={{textAlign: 'center'}} 
                         />
                     <input type="submit" value="+" style={{ display: "none"}}/>
                 </form>
