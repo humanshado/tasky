@@ -13,6 +13,11 @@ class TasksList extends Component {
         this.addTask = this.addTask.bind(this);
     }
 
+    componentDidMount = () => {
+        this.setState({ tasks: this.props.tasks });
+    }
+    
+
     addTask = (taskName) => {
         let { tasks } = this.state;
         console.log('Adding new task in TasksList...', taskName);
@@ -26,7 +31,7 @@ class TasksList extends Component {
     render() {
         console.log('props in TasksList ', this.props);
 
-        let tasks = this.props.tasks.map((task) => (
+        let tasks = this.state.tasks.map((task) => (
             <li key={task.id}>
                  <Task 
                     name={task.name} 

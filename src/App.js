@@ -43,7 +43,6 @@ class App extends Component {
     base.fetch('actions', {
       context: this,
     }).then((res) => {
-      //newCard = _.mapKeys(newCard, 'id');
       let newData = Object.assign({}, res, _.mapKeys((newCard), 'id'));  
       this.setState({ data: newData  });
     }).catch(error => console.log(error));
