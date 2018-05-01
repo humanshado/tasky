@@ -13,6 +13,8 @@ class App extends Component {
     this.state = {
       data: {}
     }
+
+    const dataContext = React.createContext(Object.values(this.state.data));
   }
 
   componentDidMount() {

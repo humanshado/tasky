@@ -71,6 +71,12 @@ h1,h2,h3,h4{
   border: none;
 }
 
+.task span:hover{
+  cursor: pointer;
+  color: blue;
+  background-color: white;
+}
+
 #add-icon{
   font-size: 3em;
   z-index: 99;
@@ -81,14 +87,22 @@ h1,h2,h3,h4{
   cursor: pointer;
 }
 
-#delete-X{
+#delete-c{
   position: relative;
   left: 95%;
   top: -30%;
 }
 
-#delete-X:hover{
+#delete-t{
+  position: relative;
+  left: 80%;
+  top: -30%;
+}
+
+#delete-c:hover, #delete-t:hover{
   color: red;
   cursor: pointer;
   font-weight: bold;
 }
+
+

@@ -32,11 +32,10 @@ class TasksList extends Component {
         console.log('props in TasksList ', this.props);
 
         let tasks = this.state.tasks.map((task) => (
-            <li key={task.id}>
+            <li key={task.name}>
                  <Task 
                     name={task.name} 
                     done={task.done}
-                    addTask={this.addTask}
                 />
             </li>
         ));

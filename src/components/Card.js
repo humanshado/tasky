@@ -28,7 +28,9 @@ class Card extends Component {
         return (
             <div className="card" style={listId === 'completed' ? { backgroundColor: '#B9C7D1' } : null}>
                 <h3 id="title" onClick={this.handleEditCard}>{title}</h3>
-                <span id="delete-X" onClick={() => this.handleSubmitCardToRemove(id)}>X</span>
+                <span id="delete-c" onClick={() => this.handleSubmitCardToRemove(id)}>
+                    <i className="fas fa-trash-alt"></i>
+                </span>
                 <hr />
                 <div className="card-details">
                     <p id="description" onClick={this.handleEditCard}>{description}</p>
