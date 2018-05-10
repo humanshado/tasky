@@ -13,11 +13,11 @@ class App extends Component {
       data: {}
     }
 
-    const dataContext = React.createContext({
-      data: Object.values(this.state.data),
-      removeCard: () => {},
-      updateTasksList: () => {}
-    });
+    // const dataContext = React.createContext({
+    //   data: Object.values(this.state.data),
+    //   removeCard: () => {},
+    //   updateTasksList: () => {}
+    // });
   }
 
   componentDidMount() {

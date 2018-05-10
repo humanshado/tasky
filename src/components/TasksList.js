@@ -27,7 +27,6 @@ class TasksList extends Component {
 
         if(this.state.editingTask){
             let currTasks = tasks.filter(t => t.taskId !== taskId);
-            console.log('currTasks in TasksList ', currTasks);
             this.setState({ tasks: currTasks.concat({ taskId, name, done: false }),
             editingTask: false 
             }, () => {
@@ -35,24 +34,12 @@ class TasksList extends Component {
             })
         }else {
             this.setState({
-                tasks: tasks.concat({ taskId, name, done: false }),
-                editingTask: false
+            tasks: tasks.concat({ taskId, name, done: false }),
+            editingTask: false
             }, () => {
                 this.props.handleSubmitTasks(this.state.tasks);
             })
         }
-
-
-        // this.state.editingTask 
-        //     ?   let currTasks = tasks.filter(t => t.taskId !== taskId);
-        //         console.log('currTasks in TasksList ', currTasks);
-        //         this.setState({ tasks: currTasks.concat({ taskId, name, done: false }) })
-        //     :   this.setState({
-        //         tasks: tasks.concat({ taskId, name, done: false }),
-        //         editingTask: false
-        //     }, () => {
-        //         this.props.handleSubmitTasks(this.state.tasks);
-        //     })
     }
 
     toggleTask = (taskId, name) => {
@@ -61,6 +48,17 @@ class TasksList extends Component {
             taskToEdit: name,
             editingTask: true
         });
+    }
+
+    removeTask = (taskId) => {
+        console.log('task to remove in TasksList.js ', taskId);
+        const { tasks } = this.state;
+        let newTasks = tasks.filter(t => t.taskId !== taskId);
+        this.setState({
+             tasks: newTasks
+         }, () => {
+             this.props.handleSubmitTasks(this.state.tasks);
+         });
     }
 
     render() {
@@ -79,6 +77,7 @@ class TasksList extends Component {
                         name={task.name}
                         done={task.done}
                         toggleTask={this.toggleTask}
+                        removeTask={this.removeTask}
                     /> }
             </li>
         ));

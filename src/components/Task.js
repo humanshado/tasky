@@ -26,7 +26,7 @@ class Task extends Component {
     
     submitTaskToRemove = (taskId) => {
         console.log('task to remove in Task.js ', taskId);
-        //this.props.handleRemoveTask(name)
+        this.props.removeTask(taskId);
     }
 
     render(){
