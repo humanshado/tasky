@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import base from './base';
 import _ from 'lodash';
-import update from 'immutability-helper';
 import SideNav from './components/SideNav';
 import CardList from './components/CardList';
 import './App.css';
@@ -14,7 +13,11 @@ class App extends Component {
       data: {}
     }
 
-    const dataContext = React.createContext(Object.values(this.state.data));
+    const dataContext = React.createContext({
+      data: Object.values(this.state.data),
+      removeCard: () => {},
+      updateTasksList: () => {}
+    });
   }
 
   componentDidMount() {
@@ -22,6 +25,8 @@ class App extends Component {
       context: this,
       state: 'data'
     })
+
+    console.log('data context ', this.dataContext);
   }
 
   componentWillUnmount(){
