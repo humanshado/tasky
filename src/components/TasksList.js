@@ -20,11 +20,9 @@ class TasksList extends Component {
         this.setState({ tasks: this.props.tasks });
     }
     
-
     addTask = ({taskId, name}) => {
         let { tasks } = this.state;
-        console.log('Adding new task in TasksList...', name);
-
+      
         if(this.state.editingTask){
             let currTasks = tasks.filter(t => t.taskId !== taskId);
             this.setState({ tasks: currTasks.concat({ taskId, name, done: false }),
@@ -51,7 +49,6 @@ class TasksList extends Component {
     }
 
     removeTask = (taskId) => {
-        console.log('task to remove in TasksList.js ', taskId);
         const { tasks } = this.state;
         let newTasks = tasks.filter(t => t.taskId !== taskId);
         this.setState({
@@ -62,7 +59,6 @@ class TasksList extends Component {
     }
 
     markTaskComplete = (taskId, name, done) => {
-        console.log('done in TasksList ', done);
         const { tasks } = this.state;
         let newTasks = tasks.filter(t => t.taskId !== taskId);
         this.setState({
@@ -75,8 +71,6 @@ class TasksList extends Component {
     }
 
     render() {
-        console.log('state in TasksList ', this.state);
-
         let tasks = this.state.tasks.map((task) => (
             <li key={task.taskId}>
                 {this.state.editingTask && this.state.taskId === task.taskId
