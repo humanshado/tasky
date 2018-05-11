@@ -10,10 +10,10 @@ class TasksList extends Component {
             tasks: [],
             editingTask: false,
             taskToEdit: '',
-            taskId: ''
+            taskId: '',
+            done: false
         }
 
-        this.addTask = this.addTask.bind(this);
     }
 
     componentDidMount = () => {
@@ -42,7 +42,7 @@ class TasksList extends Component {
         }
     }
 
-    toggleTask = (taskId, name) => {
+    toggleTask = (taskId, name, done) => {
         this.setState({ 
             taskId,
             taskToEdit: name,
@@ -61,8 +61,20 @@ class TasksList extends Component {
          });
     }
 
+    markTaskComplete = (taskId, name, done) => {
+        console.log('done in TasksList ', done);
+        const { tasks } = this.state;
+        let newTasks = tasks.filter(t => t.taskId !== taskId);
+        this.setState({
+            tasks: newTasks.concat({ taskId, name, done }),
+            taskId, 
+            done
+        }, () => {
+            this.props.handleSubmitTasks(this.state.tasks);
+        })
+    }
+
     render() {
-        //console.log('props in TasksList ', this.props);
         console.log('state in TasksList ', this.state);
 
         let tasks = this.state.tasks.map((task) => (
@@ -78,6 +90,7 @@ class TasksList extends Component {
                         done={task.done}
                         toggleTask={this.toggleTask}
                         removeTask={this.removeTask}
+                        markTaskComplete={this.markTaskComplete}
                     /> }
             </li>
         ));
