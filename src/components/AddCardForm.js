@@ -6,6 +6,7 @@ class AddCardForm extends Component {
         super(props);
         
         this.state = {
+            id: this.props.id,
             title: this.props.title,
             description: this.props.description
         }
@@ -31,11 +32,19 @@ class AddCardForm extends Component {
         })
     }
 
+    handleSubmitFormToRemove = (id) => {
+        this.props.submitRemoveCard(id);
+    }
+
     render () {
         console.log('Props in AddCardForm ', this.props);
+        const { id } = this.props;
         return (
             <div className="add-card-form">
                 <form onBlur={this.handleSubmit}>
+                    <span id="delete-c" onClick={() => this.handleSubmitFormToRemove(id)}>
+                        <i className="fas fa-trash-alt"></i>
+                    </span>
                     <input 
                         type="text" 
                         name="title"
@@ -44,6 +53,7 @@ class AddCardForm extends Component {
                         onChange={(e) => this.handleInput(e)}
                         ref={this.props.titleRef}
                         placeholder="title"/>
+                    
                     <hr />
                     <textarea 
                         type="text" 

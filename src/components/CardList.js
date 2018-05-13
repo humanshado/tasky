@@ -112,6 +112,7 @@ class CardList extends Component {
                                 key={card.id}
                                 listId={this.props.listId}
                                 updateCard={this.updateCard}
+                                submitRemoveCard={this.submitRemoveCard}
                                 titleRef={this.titleRef}
                                 descRef={this.descRef}/>
                             :<Card 
