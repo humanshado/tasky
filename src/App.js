@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { db } from './base';
 import _ from 'lodash';
+import update from 'immutability-helper';
 import SideNav from './components/SideNav';
 import CardList from './components/CardList';
 import './App.css';
@@ -55,18 +56,21 @@ class App extends Component {
       })
   }
 
-  updateTasksList = (cardId, newCard) => {
-    console.log('newCard', newCard);
+  updateTasksList = (cardId, tasks) => {
+    console.log('newCard', tasks);
     console.log('id newCard', cardId);
-
-    // base.fetch('actions', {
-    //   context: this,
-    // }).then((res) => {
-    //   let newData = Object.assign({}, res, _.mapKeys((newCard), 'id'));  
-    //   this.setState({ data: newData  });
-    // }).catch(error => console.log(error));
+    const { datacards } = this.state;
+    let cardIndex = datacards.findIndex(card => card.id === cardId);
+    db.collection('cards').doc(cardId).update({ tasks }).then(() => {
+        datacards.map(c => {
+            if(c.id === cardId){
+                c.tasks = tasks;
+            }
+        });
+    })
   }
 
+ 
   render() {
     const cards  = this.state.datacards;
     console.log('state datacards ', cards);

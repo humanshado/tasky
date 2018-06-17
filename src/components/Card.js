@@ -17,11 +17,11 @@ class Card extends Component {
         this.props.removeCard(id);
     }
 
-    handleSubmitTasks = (newTasks) => {
+    handleSubmitTasks = (tasks) => {
         let { id } = this.props;
-        console.log('submitting new tasks in card ', newTasks);
+        console.log('submitting new tasks in card ', tasks);
         console.log('id submitting new tasks in card ', id);
-        this.props.submitTasks(id, newTasks);
+        this.props.submitTasks(id, tasks);
     }
 
     render () {

@@ -13,7 +13,6 @@ class TasksList extends Component {
             taskId: '',
             done: false
         }
-
     }
 
     componentDidMount = () => {

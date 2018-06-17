@@ -16,7 +16,6 @@ class CardList extends Component {
         }
 
         this.submitRemoveCard = this.submitRemoveCard.bind(this);
-        this.submitTasks = this.submitTasks.bind(this);
 
         this.titleRef = React.createRef();
         this.descRef = React.createRef();
@@ -75,17 +74,16 @@ class CardList extends Component {
         this.props.removeCard(id);
     }
 
-    submitTasks = (cardId, newTasks) => {
+    submitTasks = (cardId, tasks) => {
         console.log('submitting new tasks in CardList ... ');
         console.log('cardId submitting new tasks in CardList ', cardId);
-        console.log('new tasks in CardList ', newTasks);
+        console.log('new tasks in CardList ', tasks);
 
-        let currCard = this.props.cards.filter(c => c.id === cardId);
-        let newCard = update(currCard, {
-            0: { tasks: { $set: newTasks }}
-        })
-         console.log('newCard after inserting newTasks..', newCard);
-         this.props.updateTasksList(cardId, newCard);
+        // let currCard = this.props.cards.filter(c => c.id === cardId);
+        // let newCard = update(currCard, {
+        //     0: { tasks: { $set: newTasks }}
+        // })
+         this.props.updateTasksList(cardId, tasks);
     }
 
     render(){
@@ -123,6 +121,7 @@ class CardList extends Component {
                                 toggleEditCard={this.toggleEditCard} 
                                 removeCard={this.props.removeCard}
                                 submitTasks={this.submitTasks}
+                                updateTasksList={this.updateTasksList}
                             />
                     })}
                 </div> 
