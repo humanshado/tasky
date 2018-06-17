@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { db } from './base';
-import _ from 'lodash';
-import update from 'immutability-helper';
+//import _ from 'lodash';
 import SideNav from './components/SideNav';
 import CardList from './components/CardList';
 import './App.css';
@@ -23,7 +22,6 @@ class App extends Component {
   }
 
   addCard = () => {
-    console.log('Adding new card to the list ...');
     db.collection('cards').add({
           id: '',
           title: '',
@@ -37,7 +35,6 @@ class App extends Component {
   }
 
   updateCard = (id, title, description ) => {
-    console.log('update card in App.js', id);
     const { datacards } = this.state;
     datacards.map(c => {
         if(c.id === id){
@@ -48,7 +45,6 @@ class App extends Component {
 
   removeCard = (cardId) => {
     const { datacards } = this.state;
-    console.log('cardId to remove in App.js ', cardId);
     db.collection('cards').doc(cardId).delete()
       .then(() => {
         let newDatacards = datacards.filter(c => c.id !== cardId);
@@ -57,10 +53,7 @@ class App extends Component {
   }
 
   updateTasksList = (cardId, tasks) => {
-    console.log('newCard', tasks);
-    console.log('id newCard', cardId);
     const { datacards } = this.state;
-    let cardIndex = datacards.findIndex(card => card.id === cardId);
     db.collection('cards').doc(cardId).update({ tasks }).then(() => {
         datacards.map(c => {
             if(c.id === cardId){

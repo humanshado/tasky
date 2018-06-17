@@ -6,7 +6,7 @@ class SideNav extends Component {
             <div className="side-nav">
                 <h3>Profile</h3>
                 <br />
-                <img src="#" alt="user image"/>
+                <img src="#" alt="user"/>
                 <h3>User Name</h3>
                 <br />
                 <ul>

@@ -50,7 +50,6 @@ class AddCardForm extends Component {
 
     render () {
         console.log('Props in AddCardForm ', this.props);
-        const { id } = this.props;
         return (
             <div className="add-card-form">
                 <form onBlur={this.handleSubmit}>

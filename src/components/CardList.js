@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { db } from '../base';
-import update from 'immutability-helper';
+//import update from 'immutability-helper';
 import sortBy from 'sort-by';
 import Card from './Card';
 import AddCardForm from './AddCardForm';
