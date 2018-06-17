@@ -15,21 +15,10 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    let newDatacards = [];
-     db.collection('cards').get().then(snapshot => {
-       snapshot.docs.map(doc => {
-          let item = doc.data();
-          item.id = doc.id;
-          item.timestamp = Date.now();
-          db.collection('cards').doc(item.id).update({
-              id: item.id,
-              timestamp: item.timestamp
-          });
-          newDatacards.push(item);
-       });
-
-       this.setState({ datacards: newDatacards });
-     });     
+    db.collection('cards').onSnapshot(snapshot => {
+      const datacards = snapshot.docs.map(c => c.data());
+      this.setState({ datacards });
+    })
   }
 
   addCard = () => {
@@ -42,18 +31,7 @@ class App extends Component {
           tasks: [],
           timestamp: Date.now()
     }).then(res => {
-        console.log('newcard from firestore ', res.id);
-        db.collection('cards').doc(res.id).update({id: res.id}).then(() =>{
-        const { datacards } = this.state;
-        this.setState({
-            datacards: datacards.concat({ 
-              id: res.id, 
-              title: '', 
-              description: '', 
-              status: 'todo', 
-              tasks: []})
-        }) 
-      });
+        db.collection('cards').doc(res.id).update({id: res.id})
     })
   }
 
