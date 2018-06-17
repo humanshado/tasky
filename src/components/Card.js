@@ -5,14 +5,16 @@ import TasksList from './TasksList';
 class Card extends Component {
 
     handleEditCard = (e) => {
-        //console.log('target in handleEdit in card ', e.target);   
+        console.log('target in handleEdit in card ', e.target);   
         let { id } = this.props;
         this.props.toggleEditCard(id, e.target);
         
     }
 
-    handleSubmitCardToRemove = (id) => {
-        this.props.submitRemoveCard(id);
+    handleRemoveCard = () => {
+        let { id } = this.props;
+        console.log('card to remove in Card.js ', id);
+        this.props.removeCard(id);
     }
 
     handleSubmitTasks = (newTasks) => {
@@ -28,7 +30,7 @@ class Card extends Component {
         return (
             <div className="card" style={listId === 'completed' ? { backgroundColor: '#B9C7D1' } : null}>
                 <h3 id="title" onClick={this.handleEditCard}>{title}</h3>
-                <span id="delete-c" onClick={() => this.handleSubmitCardToRemove(id)}>
+                <span id="delete-c" onClick={this.handleRemoveCard}>
                     <i className="fas fa-trash-alt"></i>
                 </span>
                 <hr />

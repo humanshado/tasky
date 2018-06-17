@@ -1,5 +1,5 @@
-import Rebase from 're-base';
 import firebase from 'firebase';
+require('firebase/firestore');
 
 const config = {
     apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -10,8 +10,8 @@ const config = {
     messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 };
 
-const app = firebase.initializeApp(config);
-const base = Rebase.createClass(app.database());
+firebase.initializeApp(config);
+const db = firebase.firestore();
+db.settings({ timestampsInSnapshots: true });
 
-export { app };
-export default base;
+export { db };

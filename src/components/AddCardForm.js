@@ -6,10 +6,20 @@ class AddCardForm extends Component {
         super(props);
         
         this.state = {
+            id: '',
+            title: '',
+            description: '',
+            timestamp: 0
+        }
+    }
+
+    componentDidMount = () => {
+        this.setState({
             id: this.props.id,
             title: this.props.title,
-            description: this.props.description
-        }
+            description: this.props.description,
+            timestamp: this.props.timestamp
+        })
     }
     
     handleSubmit = () => {
@@ -21,7 +31,7 @@ class AddCardForm extends Component {
             description
         }
         if(title && description){
-            this.props.updateCard(id, newData);
+            this.props.handleUpdateCard(id, newData);
         }
 
     }
@@ -32,8 +42,10 @@ class AddCardForm extends Component {
         })
     }
 
-    handleSubmitFormToRemove = (id) => {
-        this.props.submitRemoveCard(id);
+    handleRemoveCard = () => {
+        const { id } = this.state;
+        console.log('target to remove in AddCardForm.js ', id) 
+        this.props.removeCard(id);
     }
 
     render () {
@@ -42,7 +54,7 @@ class AddCardForm extends Component {
         return (
             <div className="add-card-form">
                 <form onBlur={this.handleSubmit}>
-                    <span id="delete-c" onClick={() => this.handleSubmitFormToRemove(id)}>
+                    <span id="delete-c" onClick={this.handleRemoveCard}>
                         <i className="fas fa-trash-alt"></i>
                     </span>
                     <input 

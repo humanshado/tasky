@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import base from '../base';
-import uuidv4 from 'uuid/v4';
+import { db } from '../base';
 import update from 'immutability-helper';
 import sortBy from 'sort-by';
 import Card from './Card';
@@ -23,41 +22,39 @@ class CardList extends Component {
         this.descRef = React.createRef();
     }
 
-    addCard = async () => {
-        console.log('Adding new card to the list ...');
-        const cardId = await uuidv4();
-        base.post(`actions/${cardId}`, {
-            data: {
-                id: cardId,
-                title: '',
-                description: '',
-                status: 'todo',
-                tasks: '',
-                timestamp: Date.now()
+    validateCard = () => {
+        let { listId, cards } = this.props;
+        let { cardId } = this.state;
+        console.log('cards in validateCard', cards);
+        console.log('cardId in validateCard', cardId);
+        if(listId === "todo"){
+                let theCard = cards.filter(c => c.id === cardId);
+                if((theCard.title === '') && (theCard.description === '')){
+                    alert("Please enter title and description in previous card");
+                    this.titleRef.current.focus();
+                }else {
+                    return true;
+                }
             }
-        }).then(() => {
-            console.log('New card added ...');
-            this.setState({ 
-                cardId,
-                editingCard: false
-            })
-        }).catch(error => console.log(error));
+            return false;
+        }
+
+    submitNewCard = () => {
+        console.log('submitting new card to the list ...');
+        this.setState({
+                editingCard: true
+        }, () => { this.props.addCard(); })  
     }
 
-    updateCard = async (cardId, { title, description }) => {
-        console.log('Updating card ...');
-        base.update(`actions/${cardId}`, {
-            data: {
-                title,
-                description
-            }
-        }).then(() => {
-            console.log('Card updated ...');
-            this.setState({ 
-                cardId,
+    handleUpdateCard = (id, { title, description}) => {
+        db.collection('cards').doc(id).update({ title, description}).then(() => {
+            this.setState({
+                cardId: id,
                 editingCard: false
+            }, () => {
+                this.props.updateCard(id, title, description);
             })
-        }).catch(error => console.log(error));
+        })
     }
 
     toggleEditCard = (id, target) => {
@@ -73,9 +70,9 @@ class CardList extends Component {
         }
     )}
 
-    submitRemoveCard = (cardId) => {
-        console.log('cardId in submitRemoveCard ', cardId);
-        this.props.removeCard(cardId);
+    submitRemoveCard = (id) => {
+        console.log('cardId in submitRemoveCard ', id);
+        this.props.removeCard(id);
     }
 
     submitTasks = (cardId, newTasks) => {
@@ -91,7 +88,8 @@ class CardList extends Component {
          this.props.updateTasksList(cardId, newCard);
     }
 
-    render() {
+    render(){
+        
         console.log('props in cardlist ', this.props);
 
         if(this.props.cards){
@@ -105,14 +103,14 @@ class CardList extends Component {
                     {this.props.cards.map((card) => {
                         return (card.title === '' && card.description === '') || (this.state.editingCard && this.state.cardId === card.id)
                             ? <AddCardForm 
-                                id={this.state.cardId}
+                                id={card.id}
                                 title={card.title}
                                 description={card.description}
                                 tasks={card.tasks}
                                 key={card.id}
                                 listId={this.props.listId}
-                                updateCard={this.updateCard}
-                                submitRemoveCard={this.submitRemoveCard}
+                                handleUpdateCard={this.handleUpdateCard}
+                                removeCard={this.props.removeCard}
                                 titleRef={this.titleRef}
                                 descRef={this.descRef}/>
                             :<Card 
@@ -123,14 +121,14 @@ class CardList extends Component {
                                 key={card.id}
                                 listId={this.props.listId}
                                 toggleEditCard={this.toggleEditCard} 
-                                submitRemoveCard={this.submitRemoveCard}
+                                removeCard={this.props.removeCard}
                                 submitTasks={this.submitTasks}
                             />
                     })}
                 </div> 
                 <br />
                 {this.props.listId === "todo" &&
-                    <span id="add-icon" onClick={() => this.addCard()}>
+                    <span id="add-icon" onClick={this.submitNewCard}>
                         <i className="fas fa-plus-circle"></i>
                     </span>
                 }

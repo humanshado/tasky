@@ -1,5 +1,6 @@
 .App {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 2fr;
   background-color: #C4C1C7;
   color: #2C272F;
 }
@@ -8,15 +9,7 @@ h1,h2,h3,h4{
   margin: 0;
 }
 
-.main {
-  display: flex;
-  background-color: #C4C1C7;
-  color: #2C272F;
-  height: 100vh;
-}
-
 .side-nav{
-  width: 15vw;
   height: 30vh; 
   background-color: #2C272F;
   color: #C4C1C7;
@@ -31,7 +24,6 @@ h1,h2,h3,h4{
 }
 
 .list {
-  width: 25.2%;
   padding: 1.5em;
 }
 
