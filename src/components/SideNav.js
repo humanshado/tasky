@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import * as routes from '../constants/routes';
 
 class SideNav extends Component {
     render () {
@@ -10,9 +13,10 @@ class SideNav extends Component {
                 <h3>User Name</h3>
                 <br />
                 <ul>
-                    <li>Log In</li>
-                    <li>Log Out</li>
-                    <li>Sign Up</li>
+                    <li><Link to={routes.LOG_IN}>Log In</Link></li>
+                    <li><Link to={routes.LANDING}>Landing</Link></li>
+                    <li><Link to={routes.HOME}>Home</Link></li>
+                    <li><Link to={routes.USER_ACCOUNT}>User Account</Link></li>
                 </ul>
                 <hr />
                 <h3>Analytics</h3>
