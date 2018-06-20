@@ -1,9 +1,31 @@
-import React from 'react'
+import React from 'react';
+import CardList from './CardList';
 
-const Landing = () => {
+const Landing = (props) => {
     return (
-        <div>
-            <h1>Landing Page</h1>
+        <div className="working-page">
+            <CardList
+                listId="todo"
+                title="To Do"
+                cards={props.cards.filter(card => card.status === "todo")}
+                addCard={props.addCard}
+                updateCard={props.updateCard}
+                removeCard={props.removeCard}
+                updateTasksList={props.updateTasksList} />
+            <CardList
+                listId="on-going"
+                title="On Going"
+                cards={props.cards.filter(card => card.status === "on-going")}
+                updateCard={props.updateCard}
+                removeCard={props.removeCard}
+                updateTasksList={props.updateTasksList} />
+            <CardList
+                listId="completed"
+                title="Completed"
+                cards={props.cards.filter(card => card.status === "completed")}
+                updateCard={props.updateCard}
+                removeCard={props.removeCard}
+                updateTasksList={props.updateTasksList} />
         </div>
     )
 }

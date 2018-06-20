@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { db } from './base';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { db } from './firebase';
+import { BrowserRouter as Router, Route, history, location } from 'react-router-dom';
 //import _ from 'lodash';
 
 import SideNav from './components/SideNav';
@@ -73,62 +73,29 @@ class App extends Component {
     })
   }
 
- 
   render() {
+    console.log('routes in App.js ', routes);
     const cards  = this.state.datacards;
     console.log('state datacards ', cards);
 
     return (
       <Router>
         <div className="App">
-            <SideNav />
-            <CardList
-              listId="todo"
-              title="To Do"
-              cards={cards.filter(card => card.status === "todo")}
-              addCard={this.addCard}
-              updateCard={this.updateCard}
-              removeCard={this.removeCard}
-              updateTasksList={this.updateTasksList} />
-            <CardList
-              listId="on-going"
-              title="On Going"
-              cards={cards.filter(card => card.status === "on-going")}
-              updateCard={this.updateCard}
-              removeCard={this.removeCard}
-              updateTasksList={this.updateTasksList} />
-            <CardList
-              listId="completed"
-              title="Completed"
-              cards={cards.filter(card => card.status === "completed")}
-              updateCard={this.updateCard}
-              removeCard={this.removeCard} 
-              updateTasksList={this.updateTasksList}/>
+            <SideNav /> 
+            <Route exact path={routes.LANDING} 
+                    component={() => <Landing 
+                                          cards={cards}
+                                          addCard={this.addCard}
+                                          updateCard={this.updateCard}
+                                          removeCard={this.removeCard}
+                                          updateTasksList={this.updateTasksList}/>} 
+                                          />
 
-          <Route
-            exact path={routes.LANDING}
-            component={() => <Landing />}
-          />
-          <Route
-            exact path={routes.SIGN_UP}
-            component={() => <SignUp />}
-          />
-          <Route
-            exact path={routes.LOG_IN}
-            component={() => <LogIn />}
-          />
-          <Route
-            exact path={routes.HOME}
-            component={() => <Home />}
-          />
-          <Route
-            exact path={routes.USER_ACCOUNT}
-            component={() => <UserAccount />}
-          />
-          <Route
-            exact path={routes.PASSWORD_FORGET}
-            component={() => <PasswordForget />}
-          />
+            <Route exact path={routes.SIGN_UP} component={() => <SignUp />} />
+            <Route exact path={routes.LOG_IN} component={() => <LogIn />} />
+            <Route exact path={routes.HOME} component={() => <Home />} />
+            <Route exact path={routes.USER_ACCOUNT} component={() => <UserAccount />} />
+            <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForget />} />
         </div>
       </Router>
     );

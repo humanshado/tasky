@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { db } from '../base';
+import { db } from '../firebase';
 //import update from 'immutability-helper';
 import sortBy from 'sort-by';
 import Card from './Card';
@@ -20,23 +20,6 @@ class CardList extends Component {
         this.titleRef = React.createRef();
         this.descRef = React.createRef();
     }
-
-    validateCard = () => {
-        let { listId, cards } = this.props;
-        let { cardId } = this.state;
-        console.log('cards in validateCard', cards);
-        console.log('cardId in validateCard', cardId);
-        if(listId === "todo"){
-                let theCard = cards.filter(c => c.id === cardId);
-                if((theCard.title === '') && (theCard.description === '')){
-                    alert("Please enter title and description in previous card");
-                    this.titleRef.current.focus();
-                }else {
-                    return true;
-                }
-            }
-            return false;
-        }
 
     submitNewCard = () => {
         console.log('submitting new card to the list ...');
