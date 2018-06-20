@@ -40,7 +40,7 @@ class SignUpForm extends Component {
         const { username, email, password1, password2, error } = this.state;
         const { history } = this.props;
 
-        auth.doCreateUserWithEmailAndPassoword(email, password1)
+        auth.doCreateUserWithEmailAndPassword(email, password1)
             .then(authUser => {
                 this.setState({
                     username: '',
@@ -48,7 +48,7 @@ class SignUpForm extends Component {
                     password1: '',
                     password2: ''
                 })
-                history.push(routes.HOME);
+                history.push(routes.HOME, {username});
             }).catch(error => this.setState({ error }))
     }
     
