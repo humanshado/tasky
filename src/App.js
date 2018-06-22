@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { db } from './firebase';
+import { db, firebase } from './firebase';
 import { BrowserRouter as Router, Route, history, location } from 'react-router-dom';
 //import _ from 'lodash';
-
 import SideNav from './components/SideNav';
 import Landing from './components/Landing';
 import SignUp from './components/SignUp';
@@ -10,25 +9,34 @@ import LogIn from './components/LogIn';
 import PasswordForget from './components/PasswordForget';
 import Home from './components/Home';
 import UserAccount from './components/UserAccount';
-import CardList from './components/CardList';
 import './App.css';
-
 import * as routes from './constants/routes';
 
+//AuthUser context
+ export const AuthUserContext = React.createContext(null);
+  
+//App component
 class App extends Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      datacards: []
+        datacards: [],
+        authUser: null
     }
   }
 
   componentDidMount = () => {
-    db.collection('cards').onSnapshot(snapshot => {
-      const datacards = snapshot.docs.map(c => c.data());
-      this.setState({ datacards });
-    })
+      firebase.auth.onAuthStateChanged(authUser => {
+        authUser
+          ? this.setState({ authUser })
+          : this.setState({ authUser: null });
+      });
+
+      db.collection('cards').onSnapshot(snapshot => {
+        const datacards = snapshot.docs.map(c => c.data());
+        this.setState({ datacards });
+      });
   }
 
   addCard = () => {
@@ -74,29 +82,32 @@ class App extends Component {
   }
 
   render() {
-    console.log('routes in App.js ', routes);
-    const cards  = this.state.datacards;
-    console.log('state datacards ', cards);
+    const { datacards, authUser }  = this.state;
+
+    console.log('state datacards ', datacards);
+    console.log('authUser in App.js ', authUser);
 
     return (
       <Router>
-        <div className="App">
-            <SideNav /> 
-            <Route exact path={routes.LANDING} 
-                    component={() => <Landing 
-                                          cards={cards}
-                                          addCard={this.addCard}
-                                          updateCard={this.updateCard}
-                                          removeCard={this.removeCard}
-                                          updateTasksList={this.updateTasksList}/>} 
-                                          />
+        <AuthUserContext.Provider value={authUser}>
+            <div className="App">
+                <SideNav /> 
+                <Route exact path={routes.LANDING} 
+                        component={() => <Landing 
+                                              cards={datacards}
+                                              addCard={this.addCard}
+                                              updateCard={this.updateCard}
+                                              removeCard={this.removeCard}
+                                              updateTasksList={this.updateTasksList}/>} 
+                                              />
 
-            <Route exact path={routes.SIGN_UP} component={() => <SignUp />} />
-            <Route exact path={routes.LOG_IN} component={() => <LogIn />} />
-            <Route exact path={routes.HOME} component={() => <Home />} />
-            <Route exact path={routes.USER_ACCOUNT} component={() => <UserAccount />} />
-            <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForget />} />
-        </div>
+                <Route exact path={routes.SIGN_UP} component={() => <SignUp />} />
+                <Route exact path={routes.LOG_IN} component={() => <LogIn />} />
+                <Route exact path={routes.HOME} component={() => <Home />} />
+                <Route exact path={routes.USER_ACCOUNT} component={() => <UserAccount />} />
+                <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForget />} />
+            </div>
+        </AuthUserContext.Provider>
       </Router>
     );
   }
