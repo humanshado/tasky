@@ -23,7 +23,8 @@ class SignUpForm extends Component {
             email: '',
             password1: '',
             password2: '',
-            error: null
+            error: null,
+            toHome: false
         }
     }
 
@@ -36,23 +37,28 @@ class SignUpForm extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         const { username, email, password1, password2, error } = this.state;
-        const { history } = this.props;
 
         auth.doCreateUserWithEmailAndPassword(email, password1)
-            .then(authUser => {
+            .then((authUser) => {
+                console.log('authUser signup ', authUser);
                 this.setState({
                     username: '',
                     email: '',
                     password1: '',
-                    password2: ''
+                    password2: '',
+                    toHome: true
                 })
-                history.push(routes.HOME, {username});
             }).catch(error => this.setState({ error }))
     }
     
     render () {
         const { username, password1, password2, email, error } = this.state;
         const isInvalid = password1 !== password2 || password1 === '' || password2 === '' || email === '';
+        
+        if (this.state.toHome === true) {
+            this.props.history.push(routes.HOME);
+        }
+
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
@@ -93,8 +99,8 @@ class SignUpForm extends Component {
 const SignUpLink = () => {
     return (
         <p>
-           Create an account, if you don't have one.
-            <Link to={routes.SIGN_UP}>Sign Up</Link>
+           Create an account, if you don't have one
+            <Link to={routes.SIGN_UP}> Sign Up</Link>
         </p>
     )
 }

@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { auth } from '../firebase';
+import * as routes from '../constants/routes';
 
-const LogOut = () => {
-    return (
-        <button type="button" onClick={auth.doLogOut}>
-            Log Out
-        </button>
-    )
+class LogOut extends Component {
+
+    componentWillUnmount = () => {
+        this.props.history.push(routes.LANDING);
+    }
+    
+    render(){
+        return (
+            <button 
+                type="button" 
+                onClick={auth.doLogOut}
+            >
+                Log Out
+            </button>
+        );
+    }
 }
 
-export default LogOut;
+export default withRouter(LogOut);

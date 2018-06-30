@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { auth } from '../firebase';
 import { SignUpLink } from './SignUp';
+import { PasswordForgetLink } from './PasswordForget';
 import * as routes from '../constants/routes';
 
 //Login component
@@ -10,6 +11,7 @@ const LogIn = ({ history }) => {
         <div>
             <h3>Login Page</h3>
             <LogInForm history={history} />
+            <PasswordForgetLink />
             <SignUpLink />
         </div>
     )
@@ -23,7 +25,8 @@ class LogInForm extends Component {
         this.state = {
             email: '',
             password: '',
-            error: null
+            error: null,
+            toHome: false
         }
     }
 
@@ -35,22 +38,26 @@ class LogInForm extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        const { email, password, error } = this.state;
-        const { history } = this.props;
+        const { email, password } = this.state;
 
         auth.doLogInWithEmailAndPassword(email, password)
             .then(() => {
                 this.setState({
                     email: '',
-                    password: ''
+                    password: '',
+                    toHome: true
                 })
-                history.push(routes.HOME);
             }).catch(error => this.setState({ error }))
     }
 
     render() {
         const { email, password, error } = this.state;
         const isInvalid = email === '' || password === '';
+
+        if (this.state.toHome === true) {
+            this.props.history.push(routes.HOME);
+        }
+
         return (
             <div>
                 <form onSubmit={this.onSubmit}>

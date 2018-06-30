@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { db, firebase } from './firebase';
-import { BrowserRouter as Router, Route, history, location } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 //import _ from 'lodash';
 import SideNav from './components/SideNav';
 import Landing from './components/Landing';
@@ -30,7 +30,7 @@ class App extends Component {
       firebase.auth.onAuthStateChanged(authUser => {
         authUser
           ? this.setState({ authUser })
-          : this.setState({ authUser: null });
+          : this.setState({ authUser: null })
       });
 
       db.collection('cards').onSnapshot(snapshot => {
@@ -103,8 +103,8 @@ class App extends Component {
 
                 <Route exact path={routes.SIGN_UP} component={() => <SignUp />} />
                 <Route exact path={routes.LOG_IN} component={() => <LogIn />} />
-                <Route exact path={routes.HOME} component={() => <Home />} />
-                <Route exact path={routes.USER_ACCOUNT} component={() => <UserAccount />} />
+                <Route exact path={routes.HOME} component={() => <Home /> }/>
+                <Route exact path={routes.USER_ACCOUNT} component={() => <UserAccount /> } />
                 <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForget />} />
             </div>
         </AuthUserContext.Provider>

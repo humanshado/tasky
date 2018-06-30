@@ -1,9 +1,13 @@
 import React from 'react';
+import { PasswordForgetForm } from './PasswordForget';
+import PasswordChangeForm from './PasswordChangeForm';
 
-const UserAccount = () => {
+const UserAccount = (props) => {
     return (
         <div>
-            <h1>UserAccount Page</h1>
+            <h1>Account: </h1>
+            <PasswordForgetForm />
+            <PasswordChangeForm />
         </div>
     );
 };

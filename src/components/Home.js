@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-const Home = ({ username }) => {
+const Home = (props) => {
     return (
         <div>
-            <h1>`${username} Welcome to your Home Page`</h1>
+            <h1>Welcome to your Home Page</h1>
         </div>
     )
 }
