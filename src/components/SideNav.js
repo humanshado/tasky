@@ -26,8 +26,8 @@ const SideNav = () => {
 const NavAuth = () => {
     return (
         <ul>
-            <li><Link to={routes.LANDING}>Landing</Link></li>
             <li><Link to={routes.HOME}>Home</Link></li>
+            <li><Link to={routes.USER_HOME}>User Home</Link></li>
             <li><Link to={routes.USER_ACCOUNT}>User Account</Link></li>
             <br />
             <li><LogOut /></li>
@@ -39,7 +39,7 @@ const NavNonAuth = () => {
     return (
         <ul>
             <li><Link to={routes.LOG_IN}>Log In</Link></li>
-            <li><Link to={routes.LANDING}>Landing</Link></li>
+            <li><Link to={routes.HOME}>Home</Link></li>
         </ul>
     )
 }

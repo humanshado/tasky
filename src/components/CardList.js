@@ -62,10 +62,6 @@ class CardList extends Component {
         console.log('cardId submitting new tasks in CardList ', cardId);
         console.log('new tasks in CardList ', tasks);
 
-        // let currCard = this.props.cards.filter(c => c.id === cardId);
-        // let newCard = update(currCard, {
-        //     0: { tasks: { $set: newTasks }}
-        // })
          this.props.updateTasksList(cardId, tasks);
     }
 

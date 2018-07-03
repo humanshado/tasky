@@ -6,7 +6,7 @@ import * as routes from '../constants/routes';
 class LogOut extends Component {
 
     componentWillUnmount = () => {
-        this.props.history.push(routes.LANDING);
+        this.props.history.push(routes.HOME);
     }
     
     render(){
