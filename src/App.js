@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { db, firebase } from './firebase';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 //import _ from 'lodash';
 import SideNav from './components/SideNav';
 import Home from './components/Home';
@@ -9,14 +9,13 @@ import LogIn from './components/LogIn';
 import PasswordForget from './components/PasswordForget';
 import UserHome from './components/UserHome';
 import UserAccount from './components/UserAccount';
-import NotFound  from './components/NotFound';
+//import NotFound  from './components/NotFound';
 import './App.css';
 import * as routes from './constants/routes';
 
 //AuthUser context
  export const AuthUserContext = React.createContext(null);
 
-  
 //App component
 class App extends Component {
   constructor(props) {
@@ -95,43 +94,42 @@ class App extends Component {
     console.log('authUser in App.js ', authUser);
 
     return (
-        <AuthUserContext.Provider authUser={authUser}>
         <Router>
-            <Switch>
-                    <div className="App">
-                            <SideNav /> 
-                            <Route exact path={routes.HOME} component={() => 
-                                    <Home 
-                                        cards={datacards}
-                                        addCard={this.addCard}
-                                        updateCard={this.updateCard}
-                                        removeCard={this.removeCard}
-                                        updateTasksList={this.updateTasksList}/>} 
-                                        />
-                            <Route exact path={routes.SIGN_UP} component={() => <SignUp />} />
-                            <Route exact path={routes.LOG_IN} component={({ history, match, location }) =>
-                                    <LogIn 
-                                        history={history} 
-                                        match={match} 
-                                        location={location} />} />
-                            <Route exact path={routes.USER_HOME} component={({ history, match, location }) => 
-                                    <UserHome 
-                                        user={authUser}
-                                        history={history} 
-                                        match={match} 
-                                        location={location} /> }/>
-                            <Route exact path={routes.USER_ACCOUNT} component={({ history, match, location }) => 
-                                    <UserAccount 
-                                        user={authUser} 
-                                        history={history} 
-                                        match={match} 
-                                        location={location} /> } />
-                            <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForget />} />
-                            <Route component={() => <NotFound />}  />
-                    </div>
-            </Switch>
-        </Router>
-        </AuthUserContext.Provider>
+            <AuthUserContext.Provider value={authUser}>
+                <div className="App">
+                        <SideNav /> 
+                        <Route exact path={routes.HOME} component={() => 
+                                <Home 
+                                    cards={datacards}
+                                    addCard={this.addCard}
+                                    updateCard={this.updateCard}
+                                    removeCard={this.removeCard}
+                                    updateTasksList={this.updateTasksList}/>} 
+                                    />
+                        <Redirect from="/home" to="/" />                        
+                        <Route exact path={routes.SIGN_UP} component={() => <SignUp />} />
+                        <Route exact path={routes.LOG_IN} component={({ history, match, location }) =>
+                                <LogIn 
+                                    history={history} 
+                                    match={match} 
+                                    location={location} />} />
+                        <Route exact path={routes.USER_HOME} component={({ history, match, location }) => 
+                                <UserHome 
+                                    user={authUser}
+                                    history={history} 
+                                    match={match} 
+                                    location={location} /> }/>
+                        <Route exact path={routes.USER_ACCOUNT} component={({ history, match, location }) => 
+                                <UserAccount 
+                                    user={authUser} 
+                                    history={history} 
+                                    match={match} 
+                                    location={location} /> } />
+                        <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForget />} />
+                   </div> 
+            </AuthUserContext.Provider>    
+        </Router> 
+        
     );
   }
 }
