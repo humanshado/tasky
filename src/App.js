@@ -20,10 +20,11 @@ import * as routes from './constants/routes';
 class App extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
         datacards: [],
-        authUser: null
+        authUser: null,
+        redirect: false
     }
   }
 
@@ -87,6 +88,14 @@ class App extends Component {
     })
   }
 
+ crudOps = {
+    addCard: this.addCard,
+    updateCard: this.updateCard,
+    removeCard: this.removeCard,
+    updateTasksList: this.updateTasksList,
+    toggleRedirect: this.toggleRedirect
+  }
+
   render() {
     const { datacards, authUser, redirect }  = this.state;
 
@@ -97,39 +106,18 @@ class App extends Component {
         <Router>
             <AuthUserContext.Provider value={authUser}>
                 <div className="App">
-                        <SideNav /> 
-                        <Route exact path={routes.HOME} component={() => 
-                                <Home 
-                                    cards={datacards}
-                                    addCard={this.addCard}
-                                    updateCard={this.updateCard}
-                                    removeCard={this.removeCard}
-                                    updateTasksList={this.updateTasksList}/>} 
-                                    />
-                        <Redirect from="/home" to="/" />                        
-                        <Route exact path={routes.SIGN_UP} component={() => <SignUp />} />
-                        <Route exact path={routes.LOG_IN} component={({ history, match, location }) =>
-                                <LogIn 
-                                    history={history} 
-                                    match={match} 
-                                    location={location} />} />
-                        <Route exact path={routes.USER_HOME} component={({ history, match, location }) => 
-                                <UserHome 
-                                    user={authUser}
-                                    history={history} 
-                                    match={match} 
-                                    location={location} /> }/>
-                        <Route exact path={routes.USER_ACCOUNT} component={({ history, match, location }) => 
-                                <UserAccount 
-                                    user={authUser} 
-                                    history={history} 
-                                    match={match} 
-                                    location={location} /> } />
-                        <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForget />} />
-                   </div> 
-            </AuthUserContext.Provider>    
-        </Router> 
-        
+                    <SideNav />
+                    <Route exact path={routes.HOME} render={(props) => <Home cards={datacards} crudOps={this.crudOps} {...props}/>}/>
+                    <Redirect from="/home" to="/" />
+                    <Route exact path={routes.SIGN_UP} render={(props) => <SignUp {...props}/>} />
+                    <Route exact path={routes.LOG_IN} render={(props) => <LogIn {...props}/>}/>
+                    <Route exact path={routes.USER_HOME} render={(props) => <UserHome user={authUser} {...props}/> }/>
+                    <Route exact path={routes.USER_ACCOUNT} render={(props) => <UserAccount user={authUser} {...props}/> }/>
+                    <Route exact path={routes.PASSWORD_FORGET} render={(props) => <PasswordForget {...props}/>} />
+                </div>
+            </AuthUserContext.Provider>
+        </Router>
+
     );
   }
 }

@@ -8,24 +8,20 @@ const Home = (props) => {
                 listId="todo"
                 title="To Do"
                 cards={props.cards.filter(card => card.status === "todo")}
-                addCard={props.addCard}
-                updateCard={props.updateCard}
-                removeCard={props.removeCard}
-                updateTasksList={props.updateTasksList} />
+                crudOps={props.crudOps}
+                 />
             <CardList
                 listId="on-going"
                 title="On Going"
                 cards={props.cards.filter(card => card.status === "on-going")}
-                updateCard={props.updateCard}
-                removeCard={props.removeCard}
-                updateTasksList={props.updateTasksList} />
+                crudOps={props.crudOps}
+                 />
             <CardList
                 listId="completed"
                 title="Completed"
                 cards={props.cards.filter(card => card.status === "completed")}
-                updateCard={props.updateCard}
-                removeCard={props.removeCard}
-                updateTasksList={props.updateTasksList} />
+                crudOps={props.crudOps}
+                 />
         </div>
     )
 }

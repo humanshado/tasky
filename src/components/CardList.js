@@ -9,7 +9,7 @@ import AddCardForm from './AddCardForm';
 class CardList extends Component {
     constructor (props) {
         super(props)
-        
+
         this.state = {
             cardId: '',
             editingCard: false
@@ -25,7 +25,7 @@ class CardList extends Component {
         console.log('submitting new card to the list ...');
         this.setState({
                 editingCard: true
-        }, () => { this.props.addCard(); })  
+        }, () => { this.props.crudOps.addCard(); })
     }
 
     handleUpdateCard = (id, { title, description}) => {
@@ -34,7 +34,7 @@ class CardList extends Component {
                 cardId: id,
                 editingCard: false
             }, () => {
-                this.props.updateCard(id, title, description);
+                this.props.crudOps.updateCard(id, title, description);
             })
         })
     }
@@ -43,18 +43,18 @@ class CardList extends Component {
         this.setState({
             cardId: id,
             editingCard: true
-        }, () => { 
+        }, () => {
             if (this.titleRef.current.name === target.id){
-                this.titleRef.current.focus(); 
+                this.titleRef.current.focus();
             }else{
-                this.descRef.current.focus(); 
+                this.descRef.current.focus();
             }
         }
     )}
 
     submitRemoveCard = (id) => {
         console.log('cardId in submitRemoveCard ', id);
-        this.props.removeCard(id);
+        this.props.crudOps.removeCard(id);
     }
 
     submitTasks = (cardId, tasks) => {
@@ -62,11 +62,11 @@ class CardList extends Component {
         console.log('cardId submitting new tasks in CardList ', cardId);
         console.log('new tasks in CardList ', tasks);
 
-         this.props.updateTasksList(cardId, tasks);
+         this.props.crudOps.updateTasksList(cardId, tasks);
     }
 
     render(){
-        
+
         console.log('props in cardlist ', this.props);
 
         if(this.props.cards){
@@ -79,31 +79,24 @@ class CardList extends Component {
                     <h2 style={this.props.listId === 'completed' ? { color: '#7390A4' } : null}>{this.props.title}</h2>
                     {this.props.cards.map((card) => {
                         return (card.title === '' && card.description === '') || (this.state.editingCard && this.state.cardId === card.id)
-                            ? <AddCardForm 
-                                id={card.id}
-                                title={card.title}
-                                description={card.description}
-                                tasks={card.tasks}
+                            ? <AddCardForm
+                                {...card}
                                 key={card.id}
                                 listId={this.props.listId}
                                 handleUpdateCard={this.handleUpdateCard}
-                                removeCard={this.props.removeCard}
+                                removeCard={this.props.crudOps.removeCard}
                                 titleRef={this.titleRef}
                                 descRef={this.descRef}/>
-                            :<Card 
-                                id={card.id}
-                                title={card.title}
-                                description={card.description}
-                                tasks={card.tasks}
+                            :<Card
+                                {...card}
                                 key={card.id}
                                 listId={this.props.listId}
-                                toggleEditCard={this.toggleEditCard} 
-                                removeCard={this.props.removeCard}
+                                toggleEditCard={this.toggleEditCard}
+                                removeCard={this.props.crudOps.removeCard}
                                 submitTasks={this.submitTasks}
-                                updateTasksList={this.updateTasksList}
                             />
                     })}
-                </div> 
+                </div>
                 <br />
                 {this.props.listId === "todo" &&
                     <span id="add-icon" onClick={this.submitNewCard}>

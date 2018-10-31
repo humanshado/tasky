@@ -5,16 +5,16 @@ import TasksList from './TasksList';
 class Card extends Component {
 
     handleEditCard = (e) => {
-        console.log('target in handleEdit in card ', e.target);   
+        console.log('target in handleEdit in card ', e.target);
         let { id } = this.props;
         this.props.toggleEditCard(id, e.target);
-        
+
     }
 
     handleRemoveCard = () => {
         let { id } = this.props;
         console.log('card to remove in Card.js ', id);
-        this.props.removeCard(id);
+        this.props.crudOps.removeCard(id);
     }
 
     handleSubmitTasks = (tasks) => {
@@ -44,7 +44,7 @@ class Card extends Component {
                 />
                 </div>
                 <hr />
-                <p>Card Move Options ...</p> 
+                <p>Card Move Options ...</p>
             </div>
         )
     }
