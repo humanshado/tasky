@@ -3,23 +3,22 @@ import { Link } from 'react-router-dom';
 import { AuthUserContext } from '../App';
 import LogOut from './LogOut';
 import * as routes from '../constants/routes';
+import UserAccount from './UserAccount';
 
-const SideNav = () => {
+const SideNav = (props) => {
         return (
-            <div className="side-nav">
-                    <img src="#" alt="user"/>
-                    <h3>User Name</h3>
-                    <br />
-                <AuthUserContext.Consumer >
-                    {authUser =>
-                        authUser
-                        ? <NavAuth />
-                        : <NavNonAuth />
-                    }
-                </AuthUserContext.Consumer >
-                    <hr />
-                    <h3>Analytics</h3>
-                </div>
+            <AuthUserContext.Consumer >
+                {authUser =>
+                    <div className="side-nav">
+                        <img src="#" alt="user"/>
+                        <h3>User Name</h3>
+                        <br />
+                        { authUser ? <NavAuth /> : <NavNonAuth /> }
+                        <hr />
+                        <h3>Analytics</h3>
+                    </div>
+                }
+            </AuthUserContext.Consumer >
         )
 }
 

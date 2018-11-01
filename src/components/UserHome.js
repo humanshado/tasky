@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as routes from '../constants/routes';
 
 class UserHome extends Component {
-    
+
     componentDidMount = () => {
         console.log('props in Home', this.props);
         const { user, history } = this.props;
@@ -10,7 +10,7 @@ class UserHome extends Component {
             history.push(routes.LOG_IN)
         }
     }
-    
+
     render(){
         const { user } = this.props;
         return (

@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-      firebase.auth.onAuthStateChanged(authUser => {
+      var authListener = firebase.auth.onAuthStateChanged(authUser => {
         if(authUser){
             console.log('authUser in App.js componentDidMount', authUser)
             try {
@@ -54,12 +54,16 @@ class App extends Component {
         }else{
             this.setState({ authUser: null })
         }
-      });
+      })
 
       db.collection('cards').onSnapshot(snapshot => {
         const datacards = snapshot.docs.map(c => c.data());
         this.setState({ datacards });
       });
+  }
+
+  componentWillUnmount = () => {
+      this.authListener && this.authListener();
   }
 
   changeName = (newUsername) => {
@@ -125,13 +129,13 @@ class App extends Component {
   }
 
   render() {
-    const { datacards, authUser, name }  = this.state;
+    const { datacards, authUser, name, changeName }  = this.state;
 
     return (
         <Router>
             <AuthUserContext.Provider value={authUser}>
                     <div className="App">
-                        <SideNav />
+                        <SideNav user={authUser}/>
                         <Route exact path={routes.HOME} render={(props) => <Home cards={datacards} crudOps={this.crudOps} {...props}/>}/>
                         <Route exact path={routes.SIGN_UP} render={(props) => <SignUp changeName={this.changeName} {...props}/>} />
                         <Route exact path={routes.LOG_IN} render={(props) => <LogIn {...props}/>}/>
