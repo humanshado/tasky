@@ -11,7 +11,7 @@ const SideNav = () => {
                     <h3>User Name</h3>
                     <br />
                 <AuthUserContext.Consumer >
-                    {authUser => 
+                    {authUser =>
                         authUser
                         ? <NavAuth />
                         : <NavNonAuth />

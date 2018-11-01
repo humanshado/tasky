@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { db, firebase } from './firebase';
+import { db, auth, firebase } from './firebase';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 //import _ from 'lodash';
 import SideNav from './components/SideNav';
@@ -14,7 +14,7 @@ import './App.css';
 import * as routes from './constants/routes';
 
 //AuthUser context
- export const AuthUserContext = React.createContext(null);
+export const AuthUserContext = React.createContext();
 
 //App component
 class App extends Component {
@@ -24,15 +24,36 @@ class App extends Component {
     this.state = {
         datacards: [],
         authUser: null,
-        redirect: false
+        name: ''
     }
   }
 
   componentDidMount = () => {
       firebase.auth.onAuthStateChanged(authUser => {
-        authUser
-            ? this.setState({ authUser, redirect: true })
-            : this.setState({ authUser: null, redirect: false })
+        if(authUser){
+            console.log('authUser in App.js componentDidMount', authUser)
+            try {
+                this.setState({ authUser })
+                //update user profile
+                authUser.updateProfile({
+                    displayName: this.state.name
+                }).then(() => {
+                    //create user in firestore collection 'users' with same uid as authUser
+                    return db.collection('users').doc(authUser.uid).set({
+                        IsAdmin: false,
+                        email: authUser.email,
+                        emailVerified: authUser.emailVerified,
+                        photoURL: authUser.photoURL,
+                        userId: authUser.uid,
+                        username: authUser.displayName
+                    })
+                })
+            } catch (error) {
+                console.log('Oh No!', error);
+            }
+        }else{
+            this.setState({ authUser: null })
+        }
       });
 
       db.collection('cards').onSnapshot(snapshot => {
@@ -41,11 +62,16 @@ class App extends Component {
       });
   }
 
+  changeName = (newUsername) => {
+      this.setState({ name: newUsername });
+    }
+
   toggleRedirect = () => {
       const { redirect } = this.state;
       this.setState({ redirect: redirect ? false : true });
   }
 
+  //add a blank card
   addCard = () => {
     db.collection('cards').add({
           id: '',
@@ -56,11 +82,13 @@ class App extends Component {
           timestamp: Date.now()
     }).then(res => {
         db.collection('cards').doc(res.id).update({id: res.id})
+        //this.setState here?
     })
   }
 
   updateCard = (id, title, description ) => {
     const { datacards } = this.state;
+    //update card in firestore, then ...
     datacards.map(c => {
         if(c.id === id){
             this.setState({ title, description })
@@ -97,24 +125,21 @@ class App extends Component {
   }
 
   render() {
-    const { datacards, authUser, redirect }  = this.state;
-
-    console.log('state datacards ', datacards);
-    console.log('authUser in App.js ', authUser);
+    const { datacards, authUser, name }  = this.state;
 
     return (
         <Router>
             <AuthUserContext.Provider value={authUser}>
-                <div className="App">
-                    <SideNav />
-                    <Route exact path={routes.HOME} render={(props) => <Home cards={datacards} crudOps={this.crudOps} {...props}/>}/>
-                    <Redirect from="/home" to="/" />
-                    <Route exact path={routes.SIGN_UP} render={(props) => <SignUp {...props}/>} />
-                    <Route exact path={routes.LOG_IN} render={(props) => <LogIn {...props}/>}/>
-                    <Route exact path={routes.USER_HOME} render={(props) => <UserHome user={authUser} {...props}/> }/>
-                    <Route exact path={routes.USER_ACCOUNT} render={(props) => <UserAccount user={authUser} {...props}/> }/>
-                    <Route exact path={routes.PASSWORD_FORGET} render={(props) => <PasswordForget {...props}/>} />
-                </div>
+                    <div className="App">
+                        <SideNav />
+                        <Route exact path={routes.HOME} render={(props) => <Home cards={datacards} crudOps={this.crudOps} {...props}/>}/>
+                        <Route exact path={routes.SIGN_UP} render={(props) => <SignUp changeName={this.changeName} {...props}/>} />
+                        <Route exact path={routes.LOG_IN} render={(props) => <LogIn {...props}/>}/>
+                        <Route exact path={routes.USER_HOME} render={(props) => <UserHome user={authUser} {...props}/> }/>
+                        <Route exact path={routes.USER_ACCOUNT} render={(props) => <UserAccount user={authUser} {...props}/> }/>
+                        <Route exact path={routes.PASSWORD_FORGET} render={(props) => <PasswordForget {...props}/>} />
+                        <Redirect from="/home" to="/" />
+                    </div>
             </AuthUserContext.Provider>
         </Router>
 

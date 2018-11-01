@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 
 //signup component
-const SignUp = ({ history }) => {
-    return (
-        <div>
-            <h3>SignUp Page</h3>
-            <SignUpForm history={history}/>
-        </div>
-    )
+const SignUp = ({ history, changeName }) => {
+        return (
+            <div>
+                <h3>SignUp Page</h3>
+                <SignUpForm history={history} changeName={changeName}/>
+            </div>
+        );
 }
 
 //signup Form
 class SignUpForm extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             username: '',
             email: '',
@@ -34,13 +34,19 @@ class SignUpForm extends Component {
         })
     }
 
-    onSubmit = (e) => {
-        e.preventDefault();
-        const { username, email, password1, password2, error } = this.state;
+    handleChangeUsername = (username) => {
+        console.log('username in handle', username)
+        this.props.changeName(username);
+    }
 
-        auth.doCreateUserWithEmailAndPassword(email, password1)
-            .then((authUser) => {
-                console.log('authUser signup ', authUser);
+    onSubmit = async (e) => {
+        e.preventDefault();
+        const { username, email, password1, password2 } = this.state;
+
+        //update username in App.js
+        await this.handleChangeUsername(username)
+
+        auth.doCreateUserWithEmailAndPassword(email, password1).then(() => {
                 this.setState({
                     username: '',
                     email: '',
@@ -50,11 +56,12 @@ class SignUpForm extends Component {
                 })
             }).catch(error => this.setState({ error }))
     }
-    
+
     render () {
+        console.log('Props in signup', this.props);
         const { username, password1, password2, email, error } = this.state;
         const isInvalid = password1 !== password2 || password1 === '' || password2 === '' || email === '';
-        
+
         if (this.state.toHome === true) {
             this.props.history.push(routes.HOME);
         }
@@ -62,8 +69,8 @@ class SignUpForm extends Component {
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         name="username"
                         value={username}
                         onChange={this.handleInput}
@@ -74,9 +81,9 @@ class SignUpForm extends Component {
                         value={email}
                         onChange={this.handleInput}
                         placeholder="user email"/>
-                    <input 
-                        type="password" 
-                        name="password1" 
+                    <input
+                        type="password"
+                        name="password1"
                         value={password1}
                         onChange={this.handleInput}
                         placeholder="password"/>
@@ -107,4 +114,4 @@ const SignUpLink = () => {
 
 //exports
 export { SignUpForm, SignUpLink };
-export default withRouter(SignUp);
+export default SignUp;

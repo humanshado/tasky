@@ -14,7 +14,7 @@ class Card extends Component {
     handleRemoveCard = () => {
         let { id } = this.props;
         console.log('card to remove in Card.js ', id);
-        this.props.crudOps.removeCard(id);
+        this.props.removeCard(id);
     }
 
     handleSubmitTasks = (tasks) => {
