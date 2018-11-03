@@ -10,8 +10,8 @@ const SideNav = (props) => {
             <AuthUserContext.Consumer >
                 {authUser =>
                     <div className="side-nav">
-                        <img src="#" alt="user"/>
-                        <h3>User Name</h3>
+                        <img src={authUser && authUser.photoURL || require('../utils/images/default-user.png')} alt="user"/>
+                        <h3>{authUser && authUser.displayName || 'Not loggged in'}</h3>
                         <br />
                         { authUser ? <NavAuth /> : <NavNonAuth /> }
                         <hr />

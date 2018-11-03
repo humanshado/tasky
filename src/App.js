@@ -28,6 +28,8 @@ class App extends Component {
     }
   }
 
+
+
   componentDidMount = () => {
       var authListener = firebase.auth.onAuthStateChanged(authUser => {
         if(authUser){
@@ -36,7 +38,8 @@ class App extends Component {
                 this.setState({ authUser })
                 //update user profile
                 authUser.updateProfile({
-                    displayName: this.state.name
+                    displayName: this.state.name,
+                    photoURL: authUser.photoURL
                 }).then(() => {
                     //create user in firestore collection 'users' with same uid as authUser
                     return db.collection('users').doc(authUser.uid).set({
@@ -56,6 +59,9 @@ class App extends Component {
         }
       })
 
+      console.log('App.js mounted', this.authListener);
+      this.authListener && this.authListener();
+
       db.collection('cards').onSnapshot(snapshot => {
         const datacards = snapshot.docs.map(c => c.data());
         this.setState({ datacards });
@@ -63,6 +69,7 @@ class App extends Component {
   }
 
   componentWillUnmount = () => {
+      console.log('App.js unmounting', this.authListener);
       this.authListener && this.authListener();
   }
 

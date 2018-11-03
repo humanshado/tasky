@@ -1,14 +1,6 @@
 .App {
   display: grid;
-  grid-template-columns: 25% auto;
-  background-color: #C4C1C7;
-  color: #2C272F;
-}
-
-.working-page {
-  display: grid;
-  grid-template-columns: 2fr 2fr 2fr;
-  background-color: #C4C1C7;
+  grid-template-columns: 20% auto;
   color: #2C272F;
 }
 
@@ -16,18 +8,36 @@ h1,h2,h3,h4{
   margin: 0;
 }
 
+.working-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #C4C1C7;
+  color: #2C272F;
+  height: 100vh;
+}
+
 .side-nav{
-  height: 30vh; 
+  height: 30vh;
   background-color: #2C272F;
   color: #C4C1C7;
   padding: 0.8em;
   margin: 0;
   text-align: center;
+  margin-right: 5rem;
 }
 
 .side-nav ul{
   list-style: none;
   padding-left: 0;
+}
+
+.side-nav img{
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.side-nav a{
+  color: yellow;
 }
 
 .list {
@@ -104,4 +114,12 @@ h1,h2,h3,h4{
   font-weight: bold;
 }
 
+.notes{
+  width: 100%;
+  min-height: 5rem;
+  background-color: white;
+}
 
+.card span:last-of-type{
+  cursor: pointer;
+}

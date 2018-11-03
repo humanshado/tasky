@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import TasksList from './TasksList';
+import Notes from './Notes';
 
 
 class Card extends Component {
+
+    state = { isNotesOpen: false }
 
     handleEditCard = (e) => {
         console.log('target in handleEdit in card ', e.target);
@@ -24,8 +27,13 @@ class Card extends Component {
         this.props.submitTasks(id, tasks);
     }
 
+    toggleNotes = () => {
+        this.setState({ isNotesOpen: !this.state.isNotesOpen })
+    }
+
     render () {
         console.log('props in card ', this.props);
+        const { isNotesOpen } = this.state;
         const { id, title, description, listId, tasks } = this.props;
         return (
             <div className="card" style={listId === 'completed' ? { backgroundColor: '#B9C7D1' } : null}>
@@ -44,7 +52,8 @@ class Card extends Component {
                 />
                 </div>
                 <hr />
-                <p>Card Move Options ...</p>
+                <span onClick={this.toggleNotes}>notes {isNotesOpen ? '-' : '+'}</span>
+                { isNotesOpen && <Notes /> }
             </div>
         )
     }
