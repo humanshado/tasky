@@ -11,7 +11,7 @@ const SideNav = (props) => {
                 {authUser =>
                     <div className="side-nav">
                         <img src={authUser && authUser.photoURL || require('../utils/images/default-user.png')} alt="user"/>
-                        <h3>{authUser && authUser.displayName || 'Not loggged in'}</h3>
+                        <h3>{authUser ? (authUser.displayName || 'No Name') : 'Not loggged in'}</h3>
                         <br />
                         { authUser ? <NavAuth /> : <NavNonAuth /> }
                         <hr />

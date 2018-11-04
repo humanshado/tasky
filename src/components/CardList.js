@@ -58,10 +58,7 @@ class CardList extends Component {
     }
 
     submitTasks = (cardId, tasks) => {
-        console.log('submitting new tasks in CardList ... ');
-        console.log('cardId submitting new tasks in CardList ', cardId);
         console.log('new tasks in CardList ', tasks);
-
          this.props.crudOps.updateTasksList(cardId, tasks);
     }
 
@@ -74,28 +71,36 @@ class CardList extends Component {
         }
 
         return (
-            <div className="list" style={this.props.listId === 'completed' ? { backgroundColor: '#003459', borderColor: '#7390A4' } : null}>
+            <div className="card-list" style={this.props.listId === 'completed' ? { borderLeft: '1px dashed #7390A4' } : null}>
                 <div>
-                    <h2 style={this.props.listId === 'completed' ? { color: '#7390A4' } : null}>{this.props.title}</h2>
+                    <div id='card-list-header'>
+                        <h2 style={this.props.listId === 'completed' ? { color: '#7390A4' } : null}>{this.props.title}</h2>
+                    </div>
+                    <div className='card-list-wrapper'>
                     {this.props.cards.map((card) => {
                         return (card.title === '' && card.description === '') || (this.state.editingCard && this.state.cardId === card.id)
-                            ? <AddCardForm
-                                {...card}
-                                key={card.id}
-                                listId={this.props.listId}
-                                handleUpdateCard={this.handleUpdateCard}
-                                removeCard={this.props.crudOps.removeCard}
-                                titleRef={this.titleRef}
-                                descRef={this.descRef}/>
-                            :<Card
-                                {...card}
-                                key={card.id}
-                                listId={this.props.listId}
-                                toggleEditCard={this.toggleEditCard}
-                                removeCard={this.props.crudOps.removeCard}
-                                submitTasks={this.submitTasks}
-                            />
+                            ?   <div className='card-list-item'>
+                                    <AddCardForm
+                                        {...card}
+                                        key={card.id}
+                                        listId={this.props.listId}
+                                        handleUpdateCard={this.handleUpdateCard}
+                                        removeCard={this.props.crudOps.removeCard}
+                                        titleRef={this.titleRef}
+                                        descRef={this.descRef} />
+                                </div>
+
+                            :   <div className='card-list-item'>
+                                    <Card
+                                        {...card}
+                                        key={card.id}
+                                        listId={this.props.listId}
+                                        toggleEditCard={this.toggleEditCard}
+                                        removeCard={this.props.crudOps.removeCard}
+                                        submitTasks={this.submitTasks} />
+                                </div>
                     })}
+                    </div>
                 </div>
                 <br />
                 {this.props.listId === "todo" &&

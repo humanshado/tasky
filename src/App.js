@@ -60,7 +60,7 @@ class App extends Component {
       })
 
       console.log('App.js mounted', this.authListener);
-      this.authListener && this.authListener();
+      //this.authListener && this.authListener();
 
       db.collection('cards').onSnapshot(snapshot => {
         const datacards = snapshot.docs.map(c => c.data());
@@ -142,14 +142,18 @@ class App extends Component {
         <Router>
             <AuthUserContext.Provider value={authUser}>
                     <div className="App">
-                        <SideNav user={authUser}/>
-                        <Route exact path={routes.HOME} render={(props) => <Home cards={datacards} crudOps={this.crudOps} {...props}/>}/>
-                        <Route exact path={routes.SIGN_UP} render={(props) => <SignUp changeName={this.changeName} {...props}/>} />
-                        <Route exact path={routes.LOG_IN} render={(props) => <LogIn {...props}/>}/>
-                        <Route exact path={routes.USER_HOME} render={(props) => <UserHome user={authUser} {...props}/> }/>
-                        <Route exact path={routes.USER_ACCOUNT} render={(props) => <UserAccount user={authUser} {...props}/> }/>
-                        <Route exact path={routes.PASSWORD_FORGET} render={(props) => <PasswordForget {...props}/>} />
-                        <Redirect from="/home" to="/" />
+                        <div id='aside'>
+                            <SideNav user={authUser}/>
+                        </div>
+                        <div id='main'>
+                            <Route exact path={routes.HOME} render={(props) => <Home cards={datacards} crudOps={this.crudOps} {...props}/>}/>
+                            <Route exact path={routes.SIGN_UP} render={(props) => <SignUp changeName={this.changeName} {...props}/>} />
+                            <Route exact path={routes.LOG_IN} render={(props) => <LogIn {...props}/>}/>
+                            <Route exact path={routes.USER_HOME} render={(props) => <UserHome user={authUser} {...props}/> }/>
+                            <Route exact path={routes.USER_ACCOUNT} render={(props) => <UserAccount user={authUser} {...props}/> }/>
+                            <Route exact path={routes.PASSWORD_FORGET} render={(props) => <PasswordForget {...props}/>} />
+                            <Redirect from="/home" to="/" />
+                        </div>
                     </div>
             </AuthUserContext.Provider>
         </Router>

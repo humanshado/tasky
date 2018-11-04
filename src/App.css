@@ -1,7 +1,17 @@
 .App {
   display: grid;
-  grid-template-columns: 20% auto;
   color: #2C272F;
+}
+
+#aside{
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  width: 18rem;
+}
+
+#main{
+  margin-left: 18rem;
 }
 
 h1,h2,h3,h4{
@@ -12,13 +22,12 @@ h1,h2,h3,h4{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   background-color: #C4C1C7;
-  color: #2C272F;
   height: 100vh;
 }
 
 .side-nav{
   height: 30vh;
-  background-color: #2C272F;
+  background-color: #56666B;
   color: #C4C1C7;
   padding: 0.8em;
   margin: 0;
@@ -40,19 +49,37 @@ h1,h2,h3,h4{
   color: yellow;
 }
 
-.list {
-  padding: 1.5em;
+.card-list {
+  max-width: 24.5rem;
 }
 
-.list h2 {
+.card-list h2 {
   text-align: center;
   font-weight: bold;
 }
 
+#card-list-header{
+  position: fixed;
+  top: 0;
+  height: 2rem;
+  width: 24.5rem;
+  margin-bottom: 1rem;
+  background-color: rgba(196, 193, 199, 0.9);
+}
+
+.card-list-wrapper{
+  margin-top: 3rem;
+}
+
+.card-list-item{
+  margin-top: .3rem;
+}
+
 .card, .add-card-form {
-  width: 92%;
+  max-width: 18rem;
   background-color: #F8F8F8;
-  margin-top: 1.0em;
+  margin-top: 1rem;
+  margin-left: 2rem;
   border: 1px solid #DDD;
   border-radius: 8px;
   padding: 1.2em;
@@ -87,7 +114,9 @@ h1,h2,h3,h4{
 }
 
 #add-icon{
-  font-size: 3em;
+  position: fixed;
+  top: 90vh;
+  font-size: 3rem;
   z-index: 99;
 }
 
@@ -115,9 +144,10 @@ h1,h2,h3,h4{
 }
 
 .notes{
-  width: 100%;
+  max-width: 100%;
   min-height: 5rem;
   background-color: white;
+  overflow-wrap: break-word;
 }
 
 .card span:last-of-type{

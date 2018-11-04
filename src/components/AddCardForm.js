@@ -4,7 +4,7 @@ import TasksList from './TasksList';
 class AddCardForm extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             id: '',
             title: '',
@@ -21,7 +21,7 @@ class AddCardForm extends Component {
             timestamp: this.props.timestamp
         })
     }
-    
+
     handleSubmit = () => {
         console.log('submitting...');
         const { id } = this.props;
@@ -44,7 +44,7 @@ class AddCardForm extends Component {
 
     handleRemoveCard = () => {
         const { id } = this.state;
-        console.log('target to remove in AddCardForm.js ', id) 
+        console.log('target to remove in AddCardForm.js ', id)
         this.props.removeCard(id);
     }
 
@@ -56,18 +56,18 @@ class AddCardForm extends Component {
                     <span id="delete-c" onClick={this.handleRemoveCard}>
                         <i className="fas fa-trash-alt"></i>
                     </span>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         name="title"
                         className="addtask-form"
                         value={this.state.title}
                         onChange={(e) => this.handleInput(e)}
                         ref={this.props.titleRef}
                         placeholder="title"/>
-                    
+
                     <hr />
-                    <textarea 
-                        type="text" 
+                    <textarea
+                        type="text"
                         name="description"
                         className="addtask-form"
                         value={this.state.description}
@@ -78,8 +78,6 @@ class AddCardForm extends Component {
                         listId={this.props.listId}
                         cardId={this.props.id}
                         tasks={this.props.tasks || []} />
-                    <hr />
-                    <p>Card Move Options ...</p> 
                 </form>
             </div>
         )
