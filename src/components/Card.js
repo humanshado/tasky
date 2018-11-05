@@ -22,8 +22,6 @@ class Card extends Component {
 
     handleSubmitTasks = (tasks) => {
         let { id } = this.props;
-        console.log('submitting new tasks in card ', tasks);
-        console.log('id submitting new tasks in card ', id);
         this.props.submitTasks(id, tasks);
     }
 
@@ -34,7 +32,7 @@ class Card extends Component {
     render () {
         console.log('props in card ', this.props);
         const { isNotesOpen } = this.state;
-        const { id, title, description, listId, tasks } = this.props;
+        const { id, title, description, listId, tasks, notes, ownerId } = this.props;
         return (
             <div className="card" style={listId === 'completed' ? { backgroundColor: '#B9C7D1' } : null}>
                 <h3 id="title" onClick={this.handleEditCard}>{title}</h3>
@@ -53,7 +51,7 @@ class Card extends Component {
                 </div>
                 <hr />
                 <span onClick={this.toggleNotes}>notes {isNotesOpen ? '-' : '+'}</span>
-                { isNotesOpen && <Notes /> }
+                {isNotesOpen && <Notes cardId={id} /> }
             </div>
         )
     }

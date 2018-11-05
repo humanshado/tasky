@@ -153,3 +153,23 @@ h1,h2,h3,h4{
 .card span:last-of-type{
   cursor: pointer;
 }
+
+.notes form{
+  margin-top: .5rem;
+}
+
+.notes textarea{
+    width: 99%;
+    min-height: 5rem;
+    border: none;
+    border-bottom: 1px solid #DDD;
+    overflow: hidden;
+}
+
+.notes textarea:focus{
+    outline: none;
+}
+
+.notes p{
+  padding: .5rem;
+}

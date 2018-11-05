@@ -90,6 +90,8 @@ class App extends Component {
           description: '',
           status: 'todo',
           tasks: [],
+          notes: '',
+          ownerId: '',
           timestamp: Date.now()
     }).then(res => {
         db.collection('cards').doc(res.id).update({id: res.id})

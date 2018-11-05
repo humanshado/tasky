@@ -15,6 +15,13 @@ class Notes extends Component {
     this.setState({ isEditing: !this.state.isEditing })
   }
 
+  handleSaveNotes = () => {
+    const { cardId } = this.props;
+    const { notes } = this.state;
+    console.log('saving notes: ', cardId, notes);
+
+  }
+
   render () {
     return (
       <div className='notes' onClick={this.toggleEditNotes}>
@@ -23,8 +30,8 @@ class Notes extends Component {
             <textarea
                 type='text'
                 value={this.state.notes}
-                row='10'
                 onChange={this.handleChange}
+                onClick={this.handleSaveNotes}
                 placeholder='edit notes'
                 autoFocus={true}
                 />
