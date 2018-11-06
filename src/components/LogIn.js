@@ -83,7 +83,8 @@ class LogInForm extends Component {
                             name="email"
                             value={email}
                             onChange={this.handleInput}
-                            placeholder="user email" />
+                            placeholder="user email"
+                            autoFocus={true}/>
                     </div>
                     <div>
                         <input

@@ -36,10 +36,15 @@ const NavAuth = () => {
 
 const NavNonAuth = () => {
     return (
-        <ul>
-            <li><Link to={routes.LOG_IN}>Log In</Link></li>
-            <li><Link to={routes.HOME}>Home</Link></li>
-        </ul>
+        <div>
+            <ul>
+                <li><Link to={routes.LOG_IN}>Log In</Link></li>
+                <li><Link to={routes.HOME}>Home</Link></li>
+            </ul>
+            <br />
+            Create an account, if you don't have one
+            <Link to={routes.SIGN_UP}> Sign Up</Link>
+        </div>
     )
 }
 
