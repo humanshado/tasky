@@ -105,7 +105,7 @@ class SignUpForm extends Component {
 //signup Link
 const SignUpLink = () => {
     return (
-        <p>
+        <p className='signup-link'>
            Create an account, if you don't have one
             <Link to={routes.SIGN_UP}> Sign Up</Link>
         </p>

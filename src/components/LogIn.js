@@ -7,25 +7,25 @@ import * as routes from '../constants/routes';
 
 //Login component
 class LogIn extends Component {
-    
+
     render(){
         console.log('props in LogIn', this.props);
         const { history, match, location } = this.props;
         return (<AuthUserContext.Consumer>
-                { authUser => 
+                { authUser =>
                     authUser
                     ? history.push(routes.USER_HOME)
-                    : <div>
-                        <h3>Login Page</h3>
-                        <LogInForm
-                            history={history}
-                            match={match}
-                            location={location}
-                        />
-                        <PasswordForgetLink />
+                    : <div className='login-page'>
+                        <div className='login-form'>
+                            <LogInForm
+                                history={history}
+                                match={match}
+                                location={location}
+                            />
+                        </div>
                         <SignUpLink />
                     </div>
-                }     
+                }
             </AuthUserContext.Consumer>
         );
     }
@@ -74,23 +74,30 @@ class LogInForm extends Component {
 
         return (
             <div>
+                <h3>Log In</h3>
+                <hr />
                 <form onSubmit={this.onSubmit}>
-                    <input
-                        type="email"
-                        name="email"
-                        value={email}
-                        onChange={this.handleInput}
-                        placeholder="user email" />
-                    <input
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={this.handleInput}
-                        placeholder="password" />
-                    <hr />
-                    <button type="submit" disabled={isInvalid}>Sign Up</button>
-                    {error && <p>{error.message}</p>}
+                    <div>
+                        <input
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={this.handleInput}
+                            placeholder="user email" />
+                    </div>
+                    <div>
+                        <input
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={this.handleInput}
+                            placeholder="password" />
+                    </div>
+                    <button type="submit" disabled={isInvalid}>Log In</button>
+                    <button type="cancel">Cancel</button>
                 </form>
+                {error && <p>{error.message}</p>}
+                <PasswordForgetLink />
             </div>
         )
     }
