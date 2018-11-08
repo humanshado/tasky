@@ -62,6 +62,11 @@ class CardList extends Component {
          this.props.crudOps.updateTasksList(cardId, tasks);
     }
 
+    submitNotes = (cardId, notes) => {
+        console.log('new notes in CardList ', cardId, notes)
+        this.props.crudOps.updateNotes(cardId, notes);
+    }
+
     render(){
 
         console.log('props in cardlist ', this.props);
@@ -97,7 +102,8 @@ class CardList extends Component {
                                         listId={this.props.listId}
                                         toggleEditCard={this.toggleEditCard}
                                         removeCard={this.props.crudOps.removeCard}
-                                        submitTasks={this.submitTasks} />
+                                        submitTasks={this.submitTasks}
+                                        submitNotes={this.submitNotes} />
                                 </div>
                     })}
                     </div>

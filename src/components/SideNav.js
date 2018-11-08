@@ -14,7 +14,7 @@ const SideNav = (props) => {
                         <h3>{authUser ? (authUser.displayName || 'No Name') : 'Not loggged in'}</h3>
                         <br />
                         { authUser ? <NavAuth /> : <NavNonAuth /> }
-                        <hr />
+                        <br /><hr />
                         <h3>Analytics</h3>
                     </div>
                 }

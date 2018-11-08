@@ -29,6 +29,12 @@ class Card extends Component {
         this.setState({ isNotesOpen: !this.state.isNotesOpen })
     }
 
+    handleSubmitNotes = (notes) => {
+        console.log('notes in Card.js ', notes);
+        let { id } = this.props;
+        this.props.submitNotes(id, notes);
+    }
+
     render () {
         console.log('props in card ', this.props);
         const { isNotesOpen } = this.state;
@@ -51,7 +57,7 @@ class Card extends Component {
                 </div>
                 <hr />
                 <span onClick={this.toggleNotes}>notes {isNotesOpen ? '-' : '+'}</span>
-                {isNotesOpen && <Notes cardId={id} /> }
+                {isNotesOpen && <Notes notes={notes} handleSubmitNotes={this.handleSubmitNotes} />}
             </div>
         )
     }

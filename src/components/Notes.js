@@ -7,6 +7,16 @@ class Notes extends Component {
       isEditing: false
   }
 
+  componentDidMount() {
+      this.props.notes && this.setState({ notes: this.props.notes });
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.notes !== prevProps.notes){
+      this.setState({ notes: this.props.notes });
+    }
+  }
+
   handleChange = (e) => {
     this.setState({ notes: e.target.value });
   }
@@ -16,10 +26,15 @@ class Notes extends Component {
   }
 
   handleSaveNotes = () => {
-    const { cardId } = this.props;
     const { notes } = this.state;
-    console.log('saving notes: ', cardId, notes);
+    console.log('saving notes: ', notes);
+    this.props.handleSubmitNotes(notes);
 
+  }
+
+  //set cursor at end of text on focus
+  setCursor = (e) => {
+    e.target.setSelectionRange(this.state.notes.length, this.state.notes.length)
   }
 
   render () {
@@ -34,6 +49,7 @@ class Notes extends Component {
                 onClick={this.handleSaveNotes}
                 placeholder='edit notes'
                 autoFocus={true}
+                onFocus={(e) => this.setCursor(e)}
                 />
             <input type="submit" hidden />
           </form>

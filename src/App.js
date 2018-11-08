@@ -129,12 +129,24 @@ class App extends Component {
     })
   }
 
+updateNotes = (cardId, notes) => {
+    const { datacards } = this.state;
+    db.collection('cards').doc(cardId).update({ notes }).then(() => {
+        datacards.map(c => {
+            if(c.id === cardId){
+                c.notes = notes;
+            }
+        })
+    })
+}
+
  crudOps = {
     addCard: this.addCard,
     updateCard: this.updateCard,
     removeCard: this.removeCard,
     updateTasksList: this.updateTasksList,
-    toggleRedirect: this.toggleRedirect
+    toggleRedirect: this.toggleRedirect,
+    updateNotes: this.updateNotes
   }
 
   render() {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
 import { AuthUserContext } from '../App';
 import { SignUpLink } from './SignUp';
@@ -104,6 +105,16 @@ class LogInForm extends Component {
     }
 }
 
+//login Link
+const LogInLink = () => {
+    return (
+        <p className='login-link'>
+            Have an account already?, log in here...
+            <Link to={routes.LOG_IN}> Log In</Link>
+        </p>
+    )
+}
+
 //exports
-export { LogInForm };
+export { LogInForm, LogInLink };
 export default LogIn;

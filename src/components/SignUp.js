@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
+import { LogInLink } from './LogIn';
 
 //signup component
 const SignUp = ({ history, changeName }) => {
@@ -10,6 +11,7 @@ const SignUp = ({ history, changeName }) => {
                 <div className="signup-form">
                     <SignUpForm history={history} changeName={changeName}/>
                 </div>
+                <LogInLink />
             </div>
         );
 }
