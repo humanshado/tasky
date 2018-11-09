@@ -15,7 +15,7 @@ class CardList extends Component {
             editingCard: false
         }
 
-        this.submitRemoveCard = this.submitRemoveCard.bind(this);
+        //this.submitRemoveCard = this.submitRemoveCard.bind(this);
 
         this.titleRef = React.createRef();
         this.descRef = React.createRef();

@@ -96,9 +96,7 @@ class TasksList extends Component {
         return (
             <div className="taskslist">
                 <ul>{tasks}</ul>
-                {this.props.listId !== "completed" &&
-                    <AddTaskForm addTask={this.addTask}/>
-                }
+                {this.props.listId !== "completed" && <AddTaskForm addTask={this.addTask}/>}
             </div>
         )
     }

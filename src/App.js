@@ -118,12 +118,36 @@ class App extends Component {
       })
   }
 
+  toggleCardStatus = (tasks) => {
+    let trueCount = 0;
+    let falseCount = 0;
+
+    tasks.map(t => {
+        if(t.done === true){
+            trueCount++;
+        }else if (t.done === false){
+            falseCount++;
+        }
+    })
+    if((falseCount === tasks.length) && (trueCount === 0)){
+        return 'todo';
+    }else if ((falseCount >= 1) && (trueCount >= 1)){
+        return 'on-going';
+    } else if ((falseCount === 0) && (trueCount === tasks.length)){
+        return 'completed';
+    }
+  }
+
   updateTasksList = (cardId, tasks) => {
     const { datacards } = this.state;
-    db.collection('cards').doc(cardId).update({ tasks }).then(() => {
+
+    let cardStatus = this.toggleCardStatus(tasks);
+
+    db.collection('cards').doc(cardId).update({ tasks: tasks, status: cardStatus }).then(() => {
         datacards.map(c => {
             if(c.id === cardId){
                 c.tasks = tasks;
+                c.status = cardStatus;
             }
         });
     })

@@ -48,12 +48,12 @@ class Card extends Component {
                 <hr />
                 <div className="card-details">
                     <p id="description" onClick={this.handleEditCard}>{description}</p>
-                <TasksList
-                    listId={listId}
-                    cardId={id}
-                    tasks={tasks || []}
-                    handleSubmitTasks={this.handleSubmitTasks}
-                />
+                    <TasksList
+                        listId={listId}
+                        cardId={id}
+                        tasks={tasks}
+                        handleSubmitTasks={this.handleSubmitTasks}
+                    />
                 </div>
                 <hr />
                 <span onClick={this.toggleNotes}>notes {isNotesOpen ? '-' : '+'}</span>
