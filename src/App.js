@@ -9,7 +9,7 @@ import LogIn from './components/LogIn';
 import PasswordForget from './components/PasswordForget';
 import UserHome from './components/UserHome';
 import UserAccount from './components/UserAccount';
-//import NotFound  from './components/NotFound';
+import NotFound  from './components/NotFound';
 import './App.css';
 import * as routes from './constants/routes';
 
@@ -182,13 +182,16 @@ updateNotes = (cardId, notes) => {
                             <SideNav user={authUser}/>
                         </div>
                         <div id='main'>
-                            <Route exact path={routes.HOME} render={(props) => <Home cards={datacards} crudOps={this.crudOps} {...props}/>}/>
-                            <Route exact path={routes.SIGN_UP} render={(props) => <SignUp changeName={this.changeName} {...props}/>} />
-                            <Route exact path={routes.LOG_IN} render={(props) => <LogIn {...props}/>}/>
-                            <Route exact path={routes.USER_HOME} render={(props) => <UserHome user={authUser} {...props}/> }/>
-                            <Route exact path={routes.USER_ACCOUNT} render={(props) => <UserAccount user={authUser} {...props}/> }/>
-                            <Route exact path={routes.PASSWORD_FORGET} render={(props) => <PasswordForget {...props}/>} />
-                            <Redirect from="/home" to="/" />
+                            <Switch>
+                                <Route exact path={routes.HOME} render={(props) => <Home cards={datacards} crudOps={this.crudOps} {...props}/>}/>
+                                <Route exact path={routes.SIGN_UP} render={(props) => <SignUp changeName={this.changeName} {...props}/>} />
+                                <Route exact path={routes.LOG_IN} render={(props) => <LogIn {...props}/>}/>
+                                <Route exact path={routes.USER_HOME} render={(props) => <UserHome user={authUser} {...props}/> }/>
+                                <Route exact path={routes.USER_ACCOUNT} render={(props) => <UserAccount user={authUser} {...props}/> }/>
+                                <Route exact path={routes.PASSWORD_FORGET} render={(props) => <PasswordForget {...props}/>} />
+                                <Redirect from="/home" to="/" />
+                                <Route component={NotFound} />
+                            </Switch>
                         </div>
                     </div>
             </AuthUserContext.Provider>
