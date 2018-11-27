@@ -28,8 +28,6 @@ class App extends Component {
     }
   }
 
-
-
   componentDidMount = () => {
       var authListener = firebase.auth.onAuthStateChanged(authUser => {
         if(authUser){
@@ -141,13 +139,13 @@ class App extends Component {
   updateTasksList = (cardId, tasks) => {
     const { datacards } = this.state;
 
-    let cardStatus = this.toggleCardStatus(tasks);
+    let status = this.toggleCardStatus(tasks);
 
-    db.collection('cards').doc(cardId).update({ tasks: tasks, status: cardStatus }).then(() => {
+    db.collection('cards').doc(cardId).update({ tasks, status }).then(() => {
         datacards.map(c => {
             if(c.id === cardId){
                 c.tasks = tasks;
-                c.status = cardStatus;
+                c.status = status;
             }
         });
     })

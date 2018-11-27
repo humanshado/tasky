@@ -26,8 +26,8 @@ const NavAuth = () => {
     return (
         <ul>
             <li><Link to={routes.HOME}>Home</Link></li>
-            <li><Link to={routes.USER_HOME}>User Home</Link></li>
-            <li><Link to={routes.USER_ACCOUNT}>User Account</Link></li>
+            <li><Link to={routes.USER_HOME}>User Analytics</Link></li>
+            <li><Link to={routes.USER_ACCOUNT}>Account Settings</Link></li>
             <br />
             <li><LogOut /></li>
         </ul>

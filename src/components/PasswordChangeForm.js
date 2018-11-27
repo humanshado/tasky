@@ -5,7 +5,7 @@ class PasswordChangeForm extends Component {
     constructor (props) {
         super(props);
 
-         this.state ={
+         this.state = {
              password1:'',
              password2: '',
              error: null
@@ -30,7 +30,7 @@ class PasswordChangeForm extends Component {
                 })
             }).catch(error => this.setState({ error }))
     }
-    
+
     render(){
         const { password1, password2, error } = this.state;
         const isInvalid = password1 !== password2 || password1 === '' || password2 === '';

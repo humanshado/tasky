@@ -16,6 +16,7 @@ class UserHome extends Component {
         return (
             <div>
                 <h1>Welcome to your Home Page of {user && user.email || null }</h1>
+                <p>Detailed analytics of user activities coming soon...</p>
             </div>
         );
     }
