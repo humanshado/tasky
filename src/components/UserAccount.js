@@ -16,10 +16,15 @@ class UserAccount extends Component {
     render(){
         const { user } = this.props;
         return (
-            <div>
+            <div className='user-account-page'>
                 <h1>Account: {user && user.email || null }</h1>
-                <PasswordForgetForm />
-                <PasswordChangeForm />
+                <div className='password-change-form'>
+                    <PasswordChangeForm />
+                </div>
+                <div className='password-forget-form'>
+                    <PasswordForgetForm />
+                </div>
+
             </div>
         );
     }

@@ -17,7 +17,7 @@ const PasswordForget = () => {
 class PasswordForgetForm extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             email: '',
             error: null
@@ -33,7 +33,7 @@ class PasswordForgetForm extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         const { email, error } = this.state;
-       
+
         auth.doPasswordReset(email)
             .then(() => {
                 this.setState({ email: '' })
@@ -45,19 +45,26 @@ class PasswordForgetForm extends Component {
         const isInvalid = email === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
-                    type="text"
-                    value={email}
-                    onChange={this.handleInput}
-                    placeholder="Email Address"
-                />
-                <button type="submit" disabled={isInvalid}>
-                    Reset Password
-                 </button>
+            <div>
+                <h3>Reset Password</h3>
+                <hr />
+                <form onSubmit={this.onSubmit}>
+                    <div>
+                        <input
+                            type="text"
+                            value={email}
+                            onChange={this.handleInput}
+                            placeholder="Email Address"
+                        />
+                    </div>
+                    <button type="submit" disabled={isInvalid}>
+                        Reset
+                    </button>
 
-                {error && <p>{error.message}</p>}
-            </form>
+                    {error && <p>{error.message}</p>}
+                </form>
+
+            </div>
         );
     }
 }

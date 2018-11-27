@@ -184,6 +184,38 @@ h1,h2,h3,h4{
   height: 100vh;
 }
 
+.user-account-page{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 1fr 1fr 1fr;
+  height: 100vh;
+}
+
+.user-account-page h1{
+  grid-column: 5 / 10;
+  grid-row: 1 / 2;
+  padding: .8rem;
+}
+
+.password-change-form,
+.password-forget-form{
+  padding: 1rem;
+  margin: 0 auto;
+  background-color: #F8F8F8;
+  border: 1px solid #DDD;
+  border-radius: 8px;
+}
+
+.password-change-form{
+  grid-column: 2 / 4;
+  grid-row: 2 / 3;
+}
+
+.password-forget-form{
+  grid-column: 7 / 9;
+  grid-row: 2 / 3;
+}
+
 .login-form,
 .signup-form{
   grid-column: 2 / 4;
@@ -196,32 +228,43 @@ h1,h2,h3,h4{
 }
 
 .login-form form,
-.signup-form form{
+.signup-form form,
+.password-change-form form,
+.password-forget-form form{
   margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
 .login-form h3,
-.signup-form h3{
+.signup-form h3,
+.password-change-form h3,
+.password-forget-form h3{
   font-size: 1.5rem;
   padding: 2rem;
   text-align: center;
 }
 
 .login-form input, button,
-.signup-form input, button{
+.signup-form input, button,
+.password-change-form button,
+.password-forget-form button{
   margin: 0 auto;
   margin-bottom: .8rem;
   padding: 1px;
 }
 
 .login-form button:hover,
-.signup-form button:hover{
+.signup-form button:hover,
+.password-change-form button:hover,
+.password-forget-form button:hover{
   cursor: pointer;
+  color: black;
 }
 
 .login-form input,
-.signup-form input{
+.signup-form input,
+.password-change-form input,
+.password-forget-form input{
   width: 22rem;
   height: 1.8rem;
   text-align:center;
@@ -230,14 +273,16 @@ h1,h2,h3,h4{
   border: 1px solid #CCC;
 }
 
-.login-form input:focus{
+.login-form input:focus,
+.password-change-form input:focus{
   border: .5px solid green;
   background-color: green;
   color: yellow;
   outline: none;
 }
 
-.signup-form input:focus{
+.signup-form input:focus,
+.password-forget-form input:focus{
   border: .5px solid #254441;
   background-color: #254441;
   color: yellow;
@@ -245,7 +290,9 @@ h1,h2,h3,h4{
 }
 
 .login-form button,
-.signup-form button{
+.signup-form button,
+.password-change-form button,
+.password-forget-form button{
   margin-top: 2rem;
   width: 5rem;
   height: 2rem;
