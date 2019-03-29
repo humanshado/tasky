@@ -108,7 +108,6 @@ class SignUpForm extends Component {
                             placeholder="confirm password" />
                     </div>
                     <button type="submit" disabled={isInvalid}>Sign Up</button>
-                    <button type="cancel">Cancel</button>
                 </form>
                 {error && <p>{error.message}</p>}
             </div>

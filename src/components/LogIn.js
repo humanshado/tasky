@@ -15,7 +15,7 @@ class LogIn extends Component {
         return (<AuthUserContext.Consumer>
                 { authUser =>
                     authUser
-                    ? history.push(routes.USER_HOME)
+                    ? history.push(routes.HOME)
                     : <div className='login-page'>
                         <div className='login-form'>
                             <LogInForm
@@ -96,7 +96,6 @@ class LogInForm extends Component {
                             placeholder="password" />
                     </div>
                     <button type="submit" disabled={isInvalid}>Log In</button>
-                    <button type="cancel">Cancel</button>
                 </form>
                 {error && <p>{error.message}</p>}
                 <PasswordForgetLink />

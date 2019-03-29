@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { db, auth, firebase } from './firebase';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 //import _ from 'lodash';
+import { getDefaultData } from './data';
 import SideNav from './components/SideNav';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
@@ -29,7 +30,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-      var authListener = firebase.auth.onAuthStateChanged(authUser => {
+    this.authListener = firebase.auth.onAuthStateChanged(authUser => {
         if(authUser){
             console.log('authUser in App.js componentDidMount', authUser)
             try {
@@ -50,10 +51,11 @@ class App extends Component {
                     })
                 })
             } catch (error) {
-                console.log('Oh No!', error);
+                console.log('Oh No! failed to authenticate', error);
             }
         }else{
-            this.setState({ authUser: null })
+            this.setState({ authUser: null });
+            this.props.history.push(routes.LOG_IN);
         }
       })
 
@@ -61,7 +63,7 @@ class App extends Component {
       //this.authListener && this.authListener();
 
       db.collection('cards').onSnapshot(snapshot => {
-        const datacards = snapshot.docs.map(c => c.data());
+        let datacards = snapshot.docs.map(c => c.data());
         this.setState({ datacards });
       });
   }
@@ -82,84 +84,109 @@ class App extends Component {
 
   //add a blank card
   addCard = () => {
-    db.collection('cards').add({
-          id: '',
-          title: '',
-          description: '',
-          status: 'todo',
-          tasks: [],
-          notes: '',
-          ownerId: '',
-          timestamp: Date.now()
-    }).then(res => {
-        db.collection('cards').doc(res.id).update({id: res.id})
-        //this.setState here?
-    })
+    if(this.state.authUser != null){
+        db.collection('cards').add({
+              id: '',
+              title: '',
+              description: '',
+              status: 'todo',
+              tasks: [],
+              notes: '',
+              ownerId: '',
+              timestamp: Date.now()
+        }).then(res => {
+            db.collection('cards').doc(res.id).update({id: res.id})
+            //this.setState here?
+        })
+
+    }else{
+        this.props.history.push(routes.LOG_IN);
+    }
   }
 
   updateCard = (id, title, description ) => {
-    const { datacards } = this.state;
-    //update card in firestore, then ...
-    datacards.map(c => {
-        if(c.id === id){
-            this.setState({ title, description })
-        }
-    })
+    if(this.state.authUser != null) {
+        const { datacards } = this.state;
+        //update card in firestore, then ...
+        datacards.map(c => {
+            if(c.id === id){
+                this.setState({ title, description })
+            }
+        })
+    }else{
+        this.props.history.push(routes.LOG_IN);
+    }
   }
 
   removeCard = (cardId) => {
-    const { datacards } = this.state;
-    db.collection('cards').doc(cardId).delete()
-      .then(() => {
-        let newDatacards = datacards.filter(c => c.id !== cardId);
-        this.setState({ datacards: newDatacards });
-      })
+    if(this.state.authUser != null) {
+        const { datacards } = this.state;
+        db.collection('cards').doc(cardId).delete()
+        .then(() => {
+            let newDatacards = datacards.filter(c => c.id !== cardId);
+            this.setState({ datacards: newDatacards });
+        })
+    }else{
+        this.props.history.push(routes.LOG_IN);
+    }
   }
 
   toggleCardStatus = (tasks) => {
-    let trueCount = 0;
-    let falseCount = 0;
+    if(this.state.authUser != null) {
+        let trueCount = 0;
+        let falseCount = 0;
 
-    tasks.map(t => {
-        if(t.done === true){
-            trueCount++;
-        }else if (t.done === false){
-            falseCount++;
+        tasks.map(t => {
+            if(t.done === true){
+                trueCount++;
+            }else if (t.done === false){
+                falseCount++;
+            }
+        })
+        if((falseCount === tasks.length) && (trueCount === 0)){
+            return 'todo';
+        }else if ((falseCount >= 1) && (trueCount >= 1)){
+            return 'on-going';
+        } else if ((falseCount === 0) && (trueCount === tasks.length)){
+            return 'completed';
         }
-    })
-    if((falseCount === tasks.length) && (trueCount === 0)){
-        return 'todo';
-    }else if ((falseCount >= 1) && (trueCount >= 1)){
-        return 'on-going';
-    } else if ((falseCount === 0) && (trueCount === tasks.length)){
-        return 'completed';
+    }else{
+        this.props.history.push(routes.LOG_IN);
     }
   }
 
   updateTasksList = (cardId, tasks) => {
-    const { datacards } = this.state;
+    if(this.state.authUser != null) {
+        const { datacards } = this.state;
 
-    let status = this.toggleCardStatus(tasks);
+        let status = this.toggleCardStatus(tasks);
 
-    db.collection('cards').doc(cardId).update({ tasks, status }).then(() => {
-        datacards.map(c => {
-            if(c.id === cardId){
-                c.tasks = tasks;
-                c.status = status;
-            }
-        });
-    })
+        db.collection('cards').doc(cardId).update({ tasks, status }).then(() => {
+            datacards.map(c => {
+                if(c.id === cardId){
+                    c.tasks = tasks;
+                    c.status = status;
+                }
+            });
+        })
+    }else{
+        this.props.history.push(routes.LOG_IN);
+    }
   }
 
 updateNotes = (cardId, notes) => {
-    const { datacards } = this.state;
-    db.collection('cards').doc(cardId).update({ notes }).then(() => {
-        datacards.map(c => {
-            if(c.id === cardId){
-                c.notes = notes;
-            }
+    if(this.state.authUser != null) {
+        const { datacards } = this.state;
+        db.collection('cards').doc(cardId).update({ notes }).then(() => {
+            datacards.map(c => {
+                if(c.id === cardId){
+                    c.notes = notes;
+                }
+            })
         })
-    })
+    }else{
+        this.props.history.push(routes.LOG_IN);
+    }
 }
 
  crudOps = {
@@ -175,30 +202,28 @@ updateNotes = (cardId, notes) => {
     const { datacards, authUser, name, changeName }  = this.state;
 
     return (
-        <Router>
-            <AuthUserContext.Provider value={authUser}>
-                    <div className="App">
-                        <div id='aside'>
-                            <SideNav user={authUser}/>
-                        </div>
-                        <div id='main'>
-                            <Switch>
-                                <Route exact path={routes.HOME} render={(props) => <Home cards={datacards} crudOps={this.crudOps} {...props}/>}/>
-                                <Route exact path={routes.SIGN_UP} render={(props) => <SignUp changeName={this.changeName} {...props}/>} />
-                                <Route exact path={routes.LOG_IN} render={(props) => <LogIn {...props}/>}/>
-                                <Route exact path={routes.USER_HOME} render={(props) => <UserHome user={authUser} {...props}/> }/>
-                                <Route exact path={routes.USER_ACCOUNT} render={(props) => <UserAccount user={authUser} {...props}/> }/>
-                                <Route exact path={routes.PASSWORD_FORGET} render={(props) => <PasswordForget {...props}/>} />
-                                <Redirect from="/home" to="/" />
-                                <Route component={NotFound} />
-                            </Switch>
-                        </div>
-                    </div>
-            </AuthUserContext.Provider>
-        </Router>
+        <AuthUserContext.Provider value={authUser}>
+            <div className="App">
+                <div id='aside'>
+                    <SideNav user={authUser}/>
+                </div>
+                <div id='main'>
+                    <Switch>
+                        <Route exact path={routes.HOME} render={(props) => <Home cards={datacards} crudOps={this.crudOps} {...props}/>}/>
+                        <Route exact path={routes.SIGN_UP} render={(props) => <SignUp changeName={this.changeName} {...props}/>} />
+                        <Route exact path={routes.LOG_IN} render={(props) => <LogIn {...props}/>}/>
+                        <Route exact path={routes.USER_HOME} render={(props) => <UserHome user={authUser} {...props}/> }/>
+                        <Route exact path={routes.USER_ACCOUNT} render={(props) => <UserAccount user={authUser} {...props}/> }/>
+                        <Route exact path={routes.PASSWORD_FORGET} render={(props) => <PasswordForget {...props}/>} />
+                        <Redirect from="/home" to="/" />
+                        <Route component={NotFound} />
+                    </Switch>
+                </div>
+            </div>
+        </AuthUserContext.Provider>
 
     );
   }
 }
 
-export default App;
+export default withRouter(App);

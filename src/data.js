@@ -1,5 +1,5 @@
  export const getDefaultData = () => {
-    return data = [
+    return [
         {
             id: 1,
             title: "Brainstorm on design of a 3-bedroom house",
