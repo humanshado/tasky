@@ -55,7 +55,7 @@ class App extends Component {
             }
         }else{
             this.setState({ authUser: null });
-            this.props.history.push(routes.LOG_IN);
+            //this.props.history.push(routes.LOG_IN);
         }
       })
 
